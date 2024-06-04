@@ -17,12 +17,14 @@ class Principal extends Controller
     //vista de nosotros
     public function about()
     {
+        $data['perfil'] = 'no';
         $data['title'] = 'Nosotros';
         $this->views->getView('principal', "about", $data);
     }
     //tienda 
     public function shop($page)
     {
+        $data['perfil'] = 'no';
         $pagina = (empty($page)) ? 1 : $page; // validamos el envio de la número de paginacion
         $porPagina = 9; //cantida de productos por pagina
         $desde = ($pagina - 1) * $porPagina;
@@ -37,6 +39,7 @@ class Principal extends Controller
     //detalle del producto
     public function detail($id_producto)
     {
+        $data['perfil'] = 'no';
         $data['producto'] = $this ->model ->getProducto($id_producto); //recuperamos data de funcion
         $data['title'] = $data['producto']['nombre_producto'];  //seleccinamos los datos
         $this->views->getView('principal', "detail", $data); //mandamos la vista y la data a monstrar
@@ -45,6 +48,7 @@ class Principal extends Controller
     //productos de una categoria
     public function categorias($datos)
     {
+        $data['perfil'] = 'no';
         $id_categoria = 1;
         $page = 1;
         $array = explode(',', $datos);
@@ -77,9 +81,71 @@ class Principal extends Controller
     //detalle del producto
     public function contactos()
     {
+        $data['perfil'] = 'no';
         $data['title'] = 'Contacto';
         $this->views->getView('principal', "contact", $data);
     }
 
+    //muestra la pagina de lista de deseo
+    public function deseo()
+    {
+        $data['perfil'] = 'no';
+        $data['title'] = 'Tu lista de deseo';
+        $this->views->getView('principal', "deseo", $data);
+    }
+
+    //obtener productos a partir de la lista de deseo
+    public function listaDeseo(){
+        $datos = file_get_contents('php://input');
+        $json = json_decode($datos, true);
+        $array = array();
+        foreach ($json as $producto) {
+            # code...
+            $result = $this->model->getListaDeseo($producto['idProducto']);
+            //print_r($producto);
+            $data['id'] =  $result['id'];
+            $data['nombre'] =  $result['nombre_producto'];
+            $data['precio'] =  $result['precio'];
+            $data['cantidad'] =  $producto['cantidad']; //recuperamos la cantidad del producto html, no bd
+            $data['imagen'] =  $result['imagen'];
+
+            array_push($array, $data);
+        }
+        echo json_encode($array, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+
+    public function listaProductos(){
+        $datos = file_get_contents('php://input');
+        $json = json_decode($datos, true);
+        $array['productos']= array();
+        $total = 0.00;
+
+        foreach ($json as $producto) {
+            # code...
+            $result = $this->model->getProducto($producto['idProducto']);
+            //print_r($producto);
+            $data['id'] =  $result['id'];
+            $data['nombre'] =  $result['nombre_producto'];
+            $data['precio'] =  $result['precio'];
+            $data['cantidad'] =  $producto['cantidad']; //recuperamos la cantidad del producto html, no bd
+            $subTotal = $result['precio'] * $producto['cantidad']; 
+            $data['imagen'] =  $result['imagen'];
+            $data['subTotal'] = number_format($subTotal, 2); 
+            array_push($array['productos'], $data);
+            $total = $total + $subTotal;
+        }
+        $array['moneda'] = MONEDA;
+        $array['total'] = number_format($total, 2);
+        echo json_encode($array, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function busqueda($valor){
+        $data = $this->model->getBusqueda($valor);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die;
+    }
 
 }

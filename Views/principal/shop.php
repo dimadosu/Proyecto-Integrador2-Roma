@@ -78,18 +78,23 @@
                                     <ul class="list-unstyled">
                                         <li>
                                             <!--ICONO DE CORAZON, PARA LISTA DE DESEOS-->
-                                            <a class="btn btn-success text-white" href="#">
+                                            <a class="btn btn-success text-white btnAddDeseo" href="#" prod="<?php echo $producto['id'];?>">
                                                 <i class="fas fa-heart"></i>
                                             </a>
                                         </li>
                                         <!--ICONO DE OJITO, MUESTRA EL DETALLE DEL PRODUCTO-->
                                         <li>
-                                            <!--ICONO DE CARRITO, PARA COMPRAR-->
-                                            <a class="btn btn-success text-white mt-2" href="<?php echo BASE_URL . 'principal/detail/' . $producto['id'] ?>">
+                                            <!--ICONO DE DETALLE DE PRODUCTO-->
+                                            <a class="btn btn-success text-white mt-2 " href="<?php echo BASE_URL . 'principal/detail/' . $producto['id'];?>">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </li>
-                                        <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
+                                            <!--ICONO DE AGREGAR AL CARRITO-->
+                                        <li>
+                                            <a class="btn btn-success text-white mt-2 btnAddCarrito" href="#" prod="<?php echo $producto['id'];?>">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

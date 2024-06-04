@@ -43,4 +43,16 @@ class PrincipalModel extends Query
         $consulta = "SELECT COUNT(*) AS total FROM productos WHERE id_categoria = $id_categoria";
         return $this->select($consulta);
     }
+
+    //obtener productos a partir de la lista de deseo
+    public function getListaDeseo($id_producto){
+        $consulta = "SELECT * FROM productos WHERE id = $id_producto";
+        return $this->select($consulta);
+    }
+
+    //busqueda de productos 
+    public function getBusqueda($valor){
+        $consulta = "SELECT * FROM productos WHERE nombre_producto LIKE '%".$valor."%'";
+        return $this->selectAll($consulta);
+    }
 }

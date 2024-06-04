@@ -19,6 +19,7 @@
                             <li class="list-inline-item">
                                 <h6>Categoria:</h6>
                             </li>
+                            <!--NOMBRE DE LA CATEGORIA DEL PRODUCTO-->
                             <li class="list-inline-item">
                                 <p class="text-dark"><strong><?php echo $data['producto']['nombre']?></strong></p>
                             </li>
@@ -32,13 +33,15 @@
                             <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
                         </p>
                         <form action="" method="GET">
-                            <input type="hidden" name="product-title" value="Activewear">
+                            <!--INPUT PARA ALMACENAR EL ID DEL PRODUCTO-->
+                            <input type="hidden" id="idProducto" value="<?php echo $data['producto']['id']?>"> 
                             <div class="row">
                                 <div class="col-auto">
                                     <ul class="list-inline pb-3">
                                         <li class="list-inline-item text-right">
                                             Cantidad
-                                            <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                            <!--INPUT PARA ALMACENAR LA CANTIDAD DEL PRODUCTO-->
+                                            <input type="hidden" id="product-quanity" value="1">
                                         </li>
                                         <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
                                         <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
@@ -51,7 +54,7 @@
                                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Comprar</button>
                                 </div>
                                 <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Agregar al carrito</button>
+                                    <button type="button" class="btn btn-success btn-lg" id="btnAddCart">Agregar al carrito</button>
                                 </div>
                             </div>
                         </form>
@@ -66,6 +69,7 @@
 
 <!-- Start Footer -->
 <?php include 'Views/template-principal/footer.php'; ?>
+<script src="<?php echo BASE_URL;?>assets/js/modulos/detail.js"></script>
 <!-- End Script -->
 
 <!-- Start Slider Script -->

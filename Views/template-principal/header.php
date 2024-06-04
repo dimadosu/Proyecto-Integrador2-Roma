@@ -19,8 +19,14 @@
     <!--
     
     <!-- Slick -->
-    <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL . 'assets/css/slick.min.css';?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL . 'assets/css/slick-theme.css'?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL . 'assets/css/slick.min.css'; ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL . 'assets/css/slick-theme.css' ?>">
+
+    <!--link para las ventanas modales-->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!--LINK DE PAYPAL--->
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&currency=<?php echo MONEDA ?>&components=buttons&enable-funding=venmo" data-sdk-integration-source="developer-studio"></script>
 
 </head>
 
@@ -50,7 +56,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand text-success logo h1 align-self-center" href="<?php echo BASE_URL?>">
+            <a class="navbar-brand text-success logo h1 align-self-center" href="<?php echo BASE_URL ?>">
                 Tienda Roma
             </a>
 
@@ -62,16 +68,16 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL?>">Principal</a>
+                            <a class="nav-link" href="<?php echo BASE_URL ?>">Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/about'?>">Nosotros</a>
+                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/about' ?>">Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/shop'?>">Tienda</a>
+                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/shop' ?>">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/contactos'?>">Contactanos</a>
+                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/contactos' ?>">Contactanos</a>
                         </li>
                     </ul>
                 </div>
@@ -88,27 +94,42 @@
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fas fa-fw fa-search text-dark mr-2"></i>
                     </a>
+                    <!--PARA EVITAR MOSTRAR ESTOS ICONOS EN EL PROCESO DE COMPRA-->
+
                     <!--ENLACE QUE TIENE EL ICONO DE CARRITO-->
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none <?php echo ($data['perfil'] == 'no') ? '' : 'd-none'; ?>" href="#" id="verCarrito">
                         <i class="fas fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">0</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="btnCantidadCarrito">0</span>
                     </a>
                     <!--ENLACE QUE TIENE EL ICONO DE FAVORITOS-->
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none <?php echo ($data['perfil'] == 'no') ? '' : 'd-none'; ?>" href="<?php echo BASE_URL . 'principal/deseo' ?>">
+                        <!--agregamos el btnCantidadDeseo, el estado cambia cuando se cliquea un producto a la lista -->
                         <i class="fas fa-fw fa-heart text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">0</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="btnCantidadDeseo">0</span>
                     </a>
+
                     <!--ENLACE QUE TIENE EL ICONO LOGIN-->
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fas fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                    </a>
+                    <?php if (!empty($_SESSION['correoCliente'])) { ?>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-fw fa-user text-dark mr-3"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes' ?>">Pago</a></li>
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/salir' ?>">Cerrar Seción</a></li>
+                            </ul>
+                        </div>
+                    <?php } else { ?>
+                        <a class="nav-icon text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                            <i class="fas fa-fw fa-user text-dark mr-3"></i></a>
+                        <?php } ?>
                 </div>
             </div>
 
         </div>
     </nav>
-    <!-- Close Header -->
+    <!-- Close Header data-bs-toggle="modal" data-bs-target="#modalLogin" -->
 
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
