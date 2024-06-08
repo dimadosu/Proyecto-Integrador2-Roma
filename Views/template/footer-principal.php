@@ -65,7 +65,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="claveLogin" class="fw-bold"><i class="fas fa-key"></i> Clave</label>
-                                <input id="claveLogin" class="form-control" type="text" name="claveLogin" placeholder="password">
+                                <input id="claveLogin" class="form-control" type="password" name="claveLogin" placeholder="password">
                             </div>
                             <a href="#" id="btnRegister">No tienes cuenta?, click para crear una</a>
                             <div class="float-end">

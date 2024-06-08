@@ -1,4 +1,4 @@
-<?php include 'Views/template-principal/header.php'; ?>
+<?php include 'Views/template/header-principal.php'; ?>
 
 <!-- Open Content -->
 <section class="bg-light">
@@ -68,7 +68,7 @@
 <!-- Close Content -->
 
 <!-- Start Footer -->
-<?php include 'Views/template-principal/footer.php'; ?>
+<?php include 'Views/template/footer-principal.php'; ?>
 <script src="<?php echo BASE_URL;?>assets/js/modulos/detail.js"></script>
 <!-- End Script -->
 

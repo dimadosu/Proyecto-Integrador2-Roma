@@ -1,4 +1,4 @@
-<?php include 'Views/template-principal/header.php'; ?>
+<?php include 'Views/template/header-principal.php'; ?>
 
 <!-- Start Content -->
 <div class="container py-5">
@@ -198,7 +198,7 @@
 
 
 <!-- Start Footer -->
-<?php include 'Views/template-principal/footer.php'; ?>
+<?php include 'Views/template/footer-principal.php'; ?>
 <!-- End Footer -->
 
 <!-- End Script -->

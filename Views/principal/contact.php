@@ -1,4 +1,4 @@
-<?php include 'Views/template-principal/header.php'; ?>
+<?php include 'Views/template/header-principal.php'; ?>
 
 <!-- Start Content Page -->
 <div class="container-fluid bg-light py-5">
@@ -48,7 +48,7 @@
 </div>
 <!-- End Contact -->
 <!-- Start Footer -->
-<?php include 'Views/template-principal/footer.php'; ?>
+<?php include 'Views/template/footer-principal.php'; ?>
 </body>
 
 </html>

@@ -49,5 +49,17 @@ class Query extends Conexion{
         }
         return $res;
     }
+    public function delete(string $sql)
+    {
+        $this->sql = $sql;
+        $resul = $this->con->prepare($this->sql);
+        $data = $resul->execute();
+        if($data){
+            $res = 1;
+        }else{
+            $res = 0;
+        }
+        return $res;
+    }
 }
 ?>

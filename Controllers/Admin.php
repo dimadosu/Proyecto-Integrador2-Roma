@@ -46,7 +46,7 @@ class Admin extends Controller
     public function home()
     {
         $data['title'] = 'Panel Administrativo';
-        $this->views->getView('admin/control', "index", $data);
+        $this->views->getView('admin/administracion', "index", $data);
     }
 
     //metodo para cerrar la session
@@ -55,5 +55,11 @@ class Admin extends Controller
         session_destroy();
 
         header('Location: ' . BASE_URL . 'admin');
+    }
+
+    //ir a perfil
+    public function perfil(){
+        $data['title'] = 'Perfil';
+        $this->views->getView('admin/administracion',"perfil", $data);
     }
 }

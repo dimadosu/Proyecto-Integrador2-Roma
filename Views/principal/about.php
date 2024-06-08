@@ -1,4 +1,4 @@
-<?php include 'Views/template-principal/header.php'; ?>
+<?php include 'Views/template/header-principal.php'; ?>
 
 <section class="bg-success py-5">
     <div class="container">
@@ -169,7 +169,7 @@
 
 
 <!-- Start Footer -->
-<?php include 'Views/template-principal/footer.php'; ?>
+<?php include 'Views/template/footer-principal.php'; ?>
 </body>
 
 </html>

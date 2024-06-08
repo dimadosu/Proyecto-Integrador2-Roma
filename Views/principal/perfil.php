@@ -1,4 +1,4 @@
-<?php include 'Views/template-principal/header.php'; ?>
+<?php include 'Views/template/header-principal.php'; ?>
 
 <!-- Start Content productos de la lista de deseo-->
 <div class="container py-5">
@@ -93,7 +93,7 @@
 
 
 <!-- Start Footer -->
-<?php include 'Views/template-principal/footer.php'; ?>
+<?php include 'Views/template/footer-principal.php'; ?>
 <!-- End Footer -->
 
 <script src="<?php echo BASE_URL . 'assets/js/clientes.js' ?>"></script>
