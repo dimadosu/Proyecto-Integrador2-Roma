@@ -20,8 +20,8 @@ class Usuarios extends Controller
         $data = $this->model->getUsuarios();
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['accion'] =  '<div class="d-flex">
-                <button class="btn btn-primary" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-danger" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
+                <button class="btn btn-primary ms-2 me-3" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger ms-2 me-3" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
         }
         echo json_encode($data); //retornamos data

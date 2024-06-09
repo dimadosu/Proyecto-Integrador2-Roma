@@ -2,64 +2,9 @@ const nuevo = document.querySelector("#nuevo_registro");
 const frm = document.querySelector("#frmRegistro");
 const title = document.querySelector("#titleModal");
 
-const btnAccion  = document.querySelector('#btnAccion');
+const btnAccion = document.querySelector("#btnAccion");
 
-let tblUsuario;
-
-const modalUsuario = new bootstrap.Modal(
-  document.getElementById("modalUsuario")
-);
-
-document.addEventListener("DOMContentLoaded", function () {
-  tblUsuario = $("#tableUsuarios").DataTable({
-    ajax: {
-      url: base_url + "usuarios/listar",
-      dataSrc: "",
-    },
-    columns: [
-      { data: "id" },
-      { data: "nombres" },
-      { data: "apellido_paterno" },
-      { data: "apellido_materno" },
-      { data: "correo" },
-      { data: "numero_celular" },
-      { data: "id_rol" },
-      { data: "accion" },
-    ],
-  });
-
-  //levantar modal para nuevo registro de usuarios
-  nuevo.addEventListener("click", function () {
-    document.querySelector('#id').value = '';
-    frm.reset();
-    title.textContent = "Nuevo Usuario";
-    btnAccion.textContent = "Registrar";
-    document.querySelector('#clave').removeAttribute('readonly', 'readonly')
-    modalUsuario.show();
-  });
-
-  frm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    let data = new FormData(this);
-    const url = base_url + "usuarios/registrar";
-    const http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.send(data);
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        //console.log(this.responseText);
-        const res = JSON.parse(this.responseText);
-        if (res.icono == "success") {
-          modalUsuario.hide();
-          tblUsuario.ajax.reload();
-        }
-        alertas(res.msg, res.icono);
-      }
-    };
-  });
-
-  
-});
+let tblCategorias;
 
 function alertas(msg, icono) {
   Swal.fire({
@@ -69,10 +14,60 @@ function alertas(msg, icono) {
   });
 }
 
-function eliminarUser(idUser) {
+const modalCategoria = new bootstrap.Modal(
+  document.getElementById("modalCategoria")
+);
+
+document.addEventListener("DOMContentLoaded", function () {
+  tblCategorias = $("#tblCategorias").DataTable({
+    ajax: {
+      url: base_url + "categorias/listar",
+      dataSrc: "",
+    },
+    columns: [
+      { data: "id" },
+      { data: "nombre" },
+      { data: "imagen" },
+      { data: "accion" },
+    ],
+  });
+
+  //levantar modal para nuevo registro de usuarios
+  nuevo.addEventListener("click", function () {
+    document.querySelector("#id").value = "";
+    document.querySelector('#imagen_actual').value ="";
+    document.querySelector('#imagen').value = "";
+    frm.reset();
+    title.textContent = "Nueva Categoria";
+    btnAccion.textContent = "Registrar";
+    modalCategoria.show();
+  });
+
+  frm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let data = new FormData(this);
+    const url = base_url + "categorias/registrar";
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(data);
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        //console.log(this.responseText);
+        const res = JSON.parse(this.responseText);
+        if (res.icono == "success") {
+          modalCategoria.hide();
+          tblCategorias.ajax.reload();
+        }
+        alertas(res.msg, res.icono);
+      }
+    };
+  });
+});
+
+function eliminarCat(idCat) {
   Swal.fire({
     title: "Aviso",
-    text: "Esta seguro de eliminar el usuario?",
+    text: "Esta seguro de eliminar el resgistro?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -80,7 +75,7 @@ function eliminarUser(idUser) {
     confirmButtonText: "Sí, eliminar!",
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = base_url + "usuarios/eliminarUsuario/" + idUser;
+      const url = base_url + "categorias/eliminarCategoria/" + idCat;
       const http = new XMLHttpRequest();
       http.open("GET", url, true);
       http.send();
@@ -89,7 +84,8 @@ function eliminarUser(idUser) {
           //console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.icono == "success") {
-            tblUsuario.ajax.reload();
+            tblCategorias.ajax.reload();
+            document.querySelector('#imagen').value = "";
           }
           alertas(res.msg, res.icono);
         }
@@ -98,8 +94,8 @@ function eliminarUser(idUser) {
   });
 }
 
-function editUser(idUser) {
-  const url = base_url + "usuarios/edit/" + idUser;
+function editCat(idCat) {
+  const url = base_url + "categorias/edit/" + idCat;
   const http = new XMLHttpRequest();
   http.open("GET", url, true);
   http.send();
@@ -108,21 +104,15 @@ function editUser(idUser) {
       //console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       formulario(res);
-      title.textContent = "Modificar Usuario";
-      btnAccion.textContent = 'Actualizar'
-      modalUsuario.show();
+      title.textContent = "Modificar Categoria";
+      btnAccion.textContent = "Actualizar";
+      modalCategoria.show();
     }
   };
 }
 
 function formulario(res){
-  document.querySelector('#id').value = res.id;
-  document.querySelector('#nombre').value = res.nombres;
-  document.querySelector('#apePaterno').value = res.apellido_paterno;
-  document.querySelector('#apeMaterno').value = res.apellido_materno;
-  document.querySelector('#correo').value = res.correo;
-  document.querySelector('#celular').value = res.numero_celular;
-  document.querySelector('#clave').setAttribute('readonly', 'readonly')
+    document.querySelector('#id').value = res.id;
+    document.querySelector('#categoria').value = res.nombre;
+    document.querySelector('#imagen_actual').value = res.imagen;
 }
-
-
