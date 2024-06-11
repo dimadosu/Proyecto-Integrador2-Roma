@@ -1,8 +1,8 @@
 <?php
 const BASE_URL = "http://localhost/Tienda-Roma/";
 const HOST = "localhost";
-const USER = "root";
-const PASS = "";
+const USER = "root1";
+const PASS = "12345";
 const DB = "bbdd_proyecto_roma";
 const CHARSET = "charset=utf8";
 const TITLE = "Tienda Roma";

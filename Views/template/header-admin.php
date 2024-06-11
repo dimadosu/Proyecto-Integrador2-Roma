@@ -50,13 +50,21 @@
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Módulos</div>
                         <!--Muestra la pagina de usuarios-->
+
+                        <!--usuarios-->
                         <a class="nav-link" href="<?php echo BASE_URL . 'usuarios' ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Usuarios
                         </a>
+                        <!--categoria-->
                         <a class="nav-link" href="<?php echo BASE_URL . 'categorias' ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
                             Categorías
+                        </a>
+                        <!--proveedores-->
+                        <a class="nav-link" href="<?php echo BASE_URL . 'proveedores' ?>">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
+                            Proveedores
                         </a>
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -92,4 +100,3 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Distribuciones y Servicios Roma</h1>
-                    
