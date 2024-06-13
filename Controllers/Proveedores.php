@@ -106,7 +106,7 @@ class Proveedores extends Controller
         if (is_numeric($idProveedor)) {
             $data = $this->model->eliminar($idProveedor);
             if ($data == 1) {
-                $respuesta = array('msg' => 'Proveedor eliminado', 'icono' => 'warning');
+                $respuesta = array('msg' => 'Proveedor eliminado', 'icono' => 'success');
             } else {
                 $respuesta = array('msg' => 'Error al eliminar', 'icono' => 'warning');
             }

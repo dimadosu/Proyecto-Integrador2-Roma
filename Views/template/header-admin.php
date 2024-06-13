@@ -61,6 +61,11 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
                             Categorías
                         </a>
+                        <!--marca-->
+                        <a class="nav-link" href="<?php echo BASE_URL . 'marcas' ?>">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
+                            Marcas
+                        </a>
                         <!--proveedores-->
                         <a class="nav-link" href="<?php echo BASE_URL . 'proveedores' ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
