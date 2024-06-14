@@ -28,6 +28,7 @@ class Admin extends Controller
                 } else {
                     if (password_verify($_POST['clave'], $data['clave'])) {
                         $_SESSION['correo'] = $data['correo'];
+                        $_SESSION['idUser'] = $data['id'];
                         $respuesta = array('msg' => 'Ok', 'icono' => 'success');
                     } else {
                         $respuesta = array('msg' => 'Contraseña incorrecta', 'icono' => 'warning');

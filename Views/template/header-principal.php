@@ -116,7 +116,9 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes' ?>">Pago</a></li>
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/cuenta'?>">Datos Personales</a></li>
+                                <li><a class="dropdown-item" href="#">Dirección</a></li>
+                                <li><a class="dropdown-item" href="">Contraseña</a></li>
                                 <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/salir' ?>">Cerrar Seción</a></li>
                             </ul>
                         </div>

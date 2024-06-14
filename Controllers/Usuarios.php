@@ -91,7 +91,7 @@ class Usuarios extends Controller
         if (is_numeric($idUser)) {
             $data = $this->model->eliminar($idUser);
             if ($data == 1) {
-                $respuesta = array('msg' => 'Usuario eliminado', 'icono' => 'warning');
+                $respuesta = array('msg' => 'Usuario eliminado', 'icono' => 'success');
             } else {
                 $respuesta = array('msg' => 'Error al eliminar', 'icono' => 'warning');
             }

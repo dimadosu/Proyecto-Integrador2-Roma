@@ -87,7 +87,7 @@ class Categorias extends Controller
         if (is_numeric($idCat)) {
             $data = $this->model->eliminar($idCat);
             if ($data == 1) {
-                $respuesta = array('msg' => 'Registro eliminado', 'icono' => 'warning');
+                $respuesta = array('msg' => 'Registro eliminado', 'icono' => 'success');
             } else {
                 $respuesta = array('msg' => 'Error al eliminar', 'icono' => 'warning');
             }

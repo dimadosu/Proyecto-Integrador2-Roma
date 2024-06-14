@@ -130,8 +130,8 @@ class Clientes extends Controller
 
     public function loginDirecto()
     {
-        if (isset($_POST['correoLogin']) && isset($_POST['claveLogin']) ) {
-            if (empty($_POST['correoLogin']) || empty($_POST['claveLogin']) ) {
+        if (isset($_POST['correoLogin']) && isset($_POST['claveLogin'])) {
+            if (empty($_POST['correoLogin']) || empty($_POST['claveLogin'])) {
                 $mensaje = array('msg' => 'Campos requeridos', 'icono' => 'warning');
             } else {
                 $correo = $_POST['correoLogin'];
@@ -141,7 +141,8 @@ class Clientes extends Controller
                 if (!empty($verificar)) { //si existe algo, hacer lo siguiente....
                     if (password_verify($clave, $verificar['clave'])) {
                         $_SESSION['correoCliente'] = $verificar['correo_electronico'];
-                        $_SESSION['nombreCliente'] = $verificar['nombres'] . ' '. $verificar['apellido_paterno'] . ' '. $verificar['apellido_materno'];
+                        $_SESSION['nombreCliente'] = $verificar['nombres'] . ' ' . $verificar['apellido_paterno'] . ' ' . $verificar['apellido_materno'];
+                        $_SESSION['idCliente'] = $verificar['id'];
                         $mensaje = array('msg' => 'ok', 'icono' => 'success');
                     } else {
                         $mensaje = array('msg' => 'Contraseña incorrecta', 'icono' => 'error');
@@ -156,9 +157,43 @@ class Clientes extends Controller
     }
 
     //metodo para cerrar la session
-    public function salir(){
+    public function salir()
+    {
         session_destroy();
-        
-        header('Location: '. BASE_URL);
+
+        header('Location: ' . BASE_URL);
+    }
+
+    public function cuenta()
+    {
+        $data['perfil'] = 'no'; //variable para no mostrar el carrito en el proceso de compra
+        $data['title'] = "Datos Personales";
+        $data['verificar'] = $this->model->getVerificar($_SESSION['correoCliente']);
+        $this->views->getView('principal', "cuenta", $data);
+    }
+
+    public function actualizar()
+    {
+        if (isset($_POST['nombre'])) {
+            //recuperando data del post
+            $nombre = $_POST['nombre'];
+            $dni = $_POST['dni'];
+            $apePaterno = $_POST['apellidoPaterno'];
+            $apeMaterno = $_POST['apellidoMaterno'];
+            $celular = $_POST['celular'];
+            $correo = $_POST['correo'];
+            $id = $_POST['id'];
+            if (empty($id)) {
+                $data = $this->model->modificar($nombre, $dni, $apePaterno,
+                $apeMaterno, $celular, $correo, $id);
+                if ($data == 1) {
+                    $respuesta = array('msg' => 'Datos Actualizados', 'icono' => 'success');
+                } else {
+                    $respuesta = array('msg' => 'Error al actualizar', 'icono' => 'error');
+                }
+            }
+            echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+        }
+        die();
     }
 }

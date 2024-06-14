@@ -32,27 +32,37 @@ class ClientesModel extends Query
     }
 
     //funcion para obtener token
-    public function getToken($token){
+    public function getToken($token)
+    {
         //obtenemos el cliente que tiene token 
         $consulta = "SELECT * FROM clientes WHERE token = '$token'";
         return $this->select($consulta);
     }
 
-    public function actualizarVerificar($id){
+    public function actualizarVerificar($id)
+    {
         $consulta = "UPDATE clientes SET token=?, verificar=? WHERE id=?";
         $datos = array(null, 1, $id);
         $data = $this->save($consulta, $datos);
-        if($data ==1){
+        if ($data == 1) {
             $res = $data;
-        }else{
+        } else {
             $res = 0;
         }
         return $res;
     }
 
     //funcion para verificar el correo de los clientes 
-    public function getVerificar($correo){
+    public function getVerificar($correo)
+    {
         $consulta = "SELECT * FROM clientes WHERE correo_electronico = '$correo'";
         return $this->select($consulta);
+    }
+
+    public function modificar($nombre, $dni, $apePaterno, $apeMaterno, $celular, $correo, $id)
+    {
+        $consulta = "UPDATE clientes SET nombres=?, dni=?, apellido_paterno=?, apellido_materno=?, celular=?, correo=? WHERE id=?";
+        $array = array($nombre,$dni, $apePaterno, $apeMaterno, $celular, $correo, $id);
+        return $this->save($consulta, $array);
     }
 }
