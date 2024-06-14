@@ -52,13 +52,13 @@
                         <div class="col-md-2">
                             <div class="form-group mb-2">
                                 <label for="precio" class="fw-bold">Precio</label>
-                                <input id="precio" class="form-control" type="text" name="precio">
+                                <input id="precio" class="form-control" type="text" name="precio" min="0">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group mb-2">
                                 <label for="cantidad" class="fw-bold">Cantidad</label>
-                                <input id="cantidad" class="form-control" type="number" name="cantidad">
+                                <input id="cantidad" class="form-control" type="number" name="cantidad" min="0">
                             </div>
                         </div>
                         <div class="col-md-3">
