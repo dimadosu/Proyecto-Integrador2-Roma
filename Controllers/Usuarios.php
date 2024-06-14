@@ -12,6 +12,7 @@ class Usuarios extends Controller
     public function index()
     {
         $data['title'] = 'Pagina Usuarios';
+        $data['roles'] = $this->model->getRoles();
         $this->views->getView('admin/usuarios', "index", $data);
     }
 
@@ -38,10 +39,10 @@ class Usuarios extends Controller
             $correo = $_POST['correo'];
             $clave = password_hash(($_POST['clave']), PASSWORD_DEFAULT);
             $id = $_POST['id'];
-
+            $rol = $_POST['rol'];
             if (
                 empty($_POST['nombre']) || empty($_POST['apePaterno']) || empty($_POST['apeMaterno']) ||
-                empty($_POST['correo'] || empty($_POST['celular']) || empty($_POST['clave']))
+                empty($_POST['correo'] || empty($_POST['celular']) || empty($_POST['clave']) || empty($_POST['rol']))
             ) {
                 $respuesta = array('msg' => 'Todos los campos son requeridos', 'icono' => 'warning');
             } else {
@@ -54,7 +55,8 @@ class Usuarios extends Controller
                             $apellidoMaterno,
                             $celular,
                             $correo,
-                            $clave
+                            $clave,
+                            $rol
                         );
                         if ($data > 0) {
                             $respuesta = array('msg' => 'Usuario Registrado', 'icono' => 'success');
@@ -71,6 +73,7 @@ class Usuarios extends Controller
                         $apellidoMaterno,
                         $celular,
                         $correo,
+                        $rol,
                         $id
                     );
                     if ($data == 1) {

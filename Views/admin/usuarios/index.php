@@ -8,38 +8,56 @@
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="titleModal"></h5>
-                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">   
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <form id="frmRegistro">
-                <div class="modal-body">
+                <div class="row modal-body">
                     <input type="hidden" id="id" name="id">
-                    <div class="form-group mb-2">
-                        <label for="nombre" class="fw-bold">Nombres</label>
-                        <input id="nombre" class="form-control" type="text" name="nombre">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2 ">
+                            <label for="nombre" class="fw-bold">Nombres</label>
+                            <input id="nombre" class="form-control" type="text" name="nombre">
+                        </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="apePaterno" class="fw-bold">Apellido Paterno</label>
-                        <input id="apePaterno" class="form-control" type="text" name="apePaterno">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2 ">
+                            <label for="apePaterno" class="fw-bold">Apellido Paterno</label>
+                            <input id="apePaterno" class="form-control" type="text" name="apePaterno">
+                        </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="apeMaterno"class="fw-bold">Apellido Materno</label>
-                        <input id="apeMaterno" class="form-control" type="text" name="apeMaterno">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            <label for="apeMaterno" class="fw-bold">Apellido Materno</label>
+                            <input id="apeMaterno" class="form-control" type="text" name="apeMaterno">
+                        </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="correo"class="fw-bold">Correo</label>
-                        <input id="correo" class="form-control" type="email" name="correo">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            <label for="correo" class="fw-bold">Correo</label>
+                            <input id="correo" class="form-control" type="email" name="correo">
+                        </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="celular"class="fw-bold">Celular</label>
-                        <input id="celular" class="form-control" type="text" name="celular">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            <label for="celular" class="fw-bold">Celular</label>
+                            <input id="celular" class="form-control" type="number" name="celular" min="0">
+                        </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="clave"class="fw-bold">Contraseña</label>
-                        <input id="clave" class="form-control" type="password" name="clave">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            <label for="clave" class="fw-bold">Contraseña</label>
+                            <input id="clave" class="form-control" type="password" name="clave">
+                        </div>
                     </div>
-                    <div class="form-group mb-2">
-
+                    <div class="col-md-6 mx-auto">
+                        <label for="rol" class="fw-bold">Rol</label>
+                        <select class="form-control" name="rol" id="rol">
+                            <option value="" >Seleccionar</option>
+                            <?php foreach ($data['roles'] as $rol) { ?>
+                                <option value="<?php echo $rol['id'] ?>"><?php echo $rol['nombre'] ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -72,8 +90,8 @@
         </div>
     </div>
 </div>
-<?php include 'Views/admin/script.php'?>
-<script src="<?php echo BASE_URL . 'assets/js/modulos/usuarios.js'?>"></script>
+<?php include 'Views/admin/script.php' ?>
+<script src="<?php echo BASE_URL . 'assets/js/modulos/usuarios.js' ?>"></script>
 </body>
 
 </html>

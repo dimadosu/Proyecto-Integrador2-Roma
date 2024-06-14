@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "apellido_materno" },
       { data: "correo" },
       { data: "numero_celular" },
-      { data: "id_rol" },
+      { data: "rol" },
       { data: "accion" },
     ],
   });
@@ -122,6 +122,7 @@ function formulario(res){
   document.querySelector('#apeMaterno').value = res.apellido_materno;
   document.querySelector('#correo').value = res.correo;
   document.querySelector('#celular').value = res.numero_celular;
+  document.querySelector('#rol').value = res.id_rol;
   document.querySelector('#clave').setAttribute('readonly', 'readonly')
 }
 
