@@ -11,6 +11,7 @@ class Marcas extends Controller
     public function index()
     {
         $data['title'] = 'Página Marcas';
+        $data['proveedores'] = $this->model->getProveedores();
         $this->views->getView('admin/marcas', "index", $data);
     }
 

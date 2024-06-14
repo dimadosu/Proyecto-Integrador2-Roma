@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     columns: [
       { data: "id" },
       { data: "nombre_marca" },
-      { data: "id_proveedor" },
+      { data: "nombre_comercial" },
       { data: "accion" },
     ],
   });

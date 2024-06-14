@@ -9,7 +9,13 @@ class MarcasModel extends Query
     //obtenemos las marcas
     public function getMarcas()
     {
-        $consulta = "SELECT id, nombre_marca, id_proveedor FROM marcas";
+        $consulta = "SELECT M.id, M.nombre_marca , P.nombre_comercial FROM marcas AS M 
+                    INNER JOIN proveedores AS P ON M.id_proveedor = P.id";
+        return $this->selectAll($consulta);
+    }
+
+    public function getProveedores(){
+        $consulta = "SELECT id, nombre_comercial FROM proveedores;";
         return $this->selectAll($consulta);
     }
 
