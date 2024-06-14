@@ -8,7 +8,7 @@ class ProveedoresModel extends Query
 
     public function getProveedores()
     {
-        $consulta = "SELECT id, correo_contacto, nombre_comercial, nombre_contacto, numero_contacto, razon_social, ruc FROM proveedores";
+        $consulta = "SELECT id, ruc, nombre_comercial, razon_social, nombre_contacto, numero_contacto, correo_contacto FROM proveedores";
         return $this->selectAll($consulta);
     }
     

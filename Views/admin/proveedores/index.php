@@ -13,28 +13,28 @@
                 <div class="modal-body">
                     <input type="hidden" id="id" name="id">
                     <div class="form-group mb-2">
-                        <label for="correo_contacto" class="fw-bold">Correo Contacto</label>
-                        <input id="correo_contacto" class="form-control" type="email" name="correo_contacto">
+                        <label for="ruc" class="fw-bold">RUC</label>
+                        <input id="ruc" class="form-control" type="text" name="ruc">
                     </div>
                     <div class="form-group mb-2">
-                        <label for="nombre_comercial" class="fw-bold">Nombre Comercial</label>
+                        <label for="nombre_comercial" class="fw-bold">Proveedor</label>
                         <input id="nombre_comercial" class="form-control" type="text" name="nombre_comercial">
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="nombre_contacto" class="fw-bold">Nombre Contacto</label>
-                        <input id="nombre_contacto" class="form-control" type="text" name="nombre_contacto">
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="numero_contacto" class="fw-bold">Número Contacto</label>
-                        <input id="numero_contacto" class="form-control" type="text" name="numero_contacto">
                     </div>
                     <div class="form-group mb-2">
                         <label for="razon_social" class="fw-bold">Razón Social</label>
                         <input id="razon_social" class="form-control" type="text" name="razon_social">
                     </div>
                     <div class="form-group mb-2">
-                        <label for="ruc" class="fw-bold">RUC</label>
-                        <input id="ruc" class="form-control" type="text" name="ruc">
+                        <label for="nombre_contacto" class="fw-bold">Persona de Contacto</label>
+                        <input id="nombre_contacto" class="form-control" type="text" name="nombre_contacto">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="numero_contacto" class="fw-bold">Número Contacto</label>
+                        <input id="numero_contacto" class="form-control" type="number" name="numero_contacto" min="0">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="correo_contacto" class="fw-bold">Correo Contacto</label>
+                        <input id="correo_contacto" class="form-control" type="email" name="correo_contacto">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -52,12 +52,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Correo Contacto</th>
-                        <th>Nombre Comercial</th>
-                        <th>Nombre Contacto</th>
-                        <th>Número Contacto</th>
+                        <th>Ruc</th>
+                        <th>Proveedor</th>
                         <th>Razón Social</th>
-                        <th>RUC</th>
+                        <th>Persona de Contacto</th>
+                        <th>Número de Contacto</th>
+                        <th>Correo de Contacto</th>
                         <th>Acción</th>
                     </tr>
                 </thead>

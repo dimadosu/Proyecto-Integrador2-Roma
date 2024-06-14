@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     columns: [
       { data: "id" },
-      { data: "correo_contacto" },
+      { data: "ruc" },
       { data: "nombre_comercial" },
+      { data: "razon_social" },
       { data: "nombre_contacto" },
       { data: "numero_contacto" },
-      { data: "razon_social" },
-      { data: "ruc" },
+      { data: "correo_contacto" },
       { data: "accion" },
     ],
   });
