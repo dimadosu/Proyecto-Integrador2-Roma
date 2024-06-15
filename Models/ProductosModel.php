@@ -64,4 +64,20 @@ class ProductosModel extends Query
         $array = array($nombre, $precio, $cantidad, $categoria, $marca, $medida, $imagen, $user, $id);
         return $this->save($consulta, $array);
     }
+
+    public function registrarEntrada($fecha, $cantidad, $idProducto)
+    {
+        $consulta = "INSERT INTO entrada_productos(fecha, stock, id_producto) VALUES (?,?,?)";
+        $array = array($fecha, $cantidad, $idProducto);
+        return $this->insertar($consulta, $array);
+    }
+
+    public function getEntradas(){
+        $consulta = "SELECT  EP.id , P.nombre_producto, P.cantidad, EP.stock, EP.fecha FROM productos AS P 
+                    INNER JOIN entrada_productos AS EP ON P.id = EP.id_producto;";
+        return $this->selectAll($consulta);
+    }
+
+    
+    
 }

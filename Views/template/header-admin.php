@@ -56,6 +56,11 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Usuarios
                         </a>
+                        <!--Clientes-->
+                        <a class="nav-link" href="<?php echo BASE_URL . 'clientes' ?>">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Clientes
+                        </a>
                         <!--categoria-->
                         <a class="nav-link" href="<?php echo BASE_URL . 'categorias' ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>

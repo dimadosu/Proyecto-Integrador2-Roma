@@ -7,6 +7,12 @@
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#nuevoProducto" type="button" role="tab" aria-controls="nuevoProducto" aria-selected="false">Nuevo</button>
     </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#entradas" type="button" role="tab" aria-controls="entradas" aria-selected="false">Entradas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#salidas" type="button" role="tab" aria-controls="salidas" aria-selected="false">Salidas</button>
+    </li>
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="listaProducto" role="tabpanel" aria-labelledby="home-tab">
@@ -107,6 +113,12 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div  class="tab-pane fade" id="entradas" role="tabpanel" aria-labelledby="profile-tab">
+        <?php include 'Views/admin/productos/entradas.php'?>
+    </div>
+    <div  class="tab-pane fade" id="salidas" role="tabpanel" aria-labelledby="profile-tab">
+            <p>estas en salidas</p>
     </div>
 </div>
 

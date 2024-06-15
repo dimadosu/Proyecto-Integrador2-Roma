@@ -15,6 +15,7 @@ class Productos extends Controller
         $data['categorias'] = $this->model->getCategorias();
         $data['marcas'] = $this->model->getMarcas();
         $data['unidades'] = $this->model->getUnidades();
+        $data['entradas'] = $this->model->getEntradas();
         $this->views->getView('admin/productos', "index", $data);
     }
 
@@ -28,6 +29,13 @@ class Productos extends Controller
                 <button class="btn btn-danger ms-2 me-3" type="button" onclick="eliminarProd(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
         }
+        echo json_encode($data); //retornamos data
+        die;
+    }
+
+    public function listarEntradas()
+    {
+        $data = $this->model->getEntradas();
         echo json_encode($data); //retornamos data
         die;
     }
@@ -47,7 +55,7 @@ class Productos extends Controller
             $id = $_POST['id'];
             $ruta = 'assets/img/productos/';
             $nombreImg = date('YmdHis');
-            $fecha = "";
+            $fecha = date('Y-m-d H:i:s');
             if (
                 empty($_POST['nombre']) || empty($_POST['precio']) || empty($_POST['cantidad']) || empty($_POST['categoria']) ||
                 empty($_POST['marca']) || empty($_POST['medida']) || empty($_POST['idUser'])
@@ -68,7 +76,10 @@ class Productos extends Controller
                         if (!empty($imagen['name'])) {
                             move_uploaded_file($tmp_name, $destino);
                         }
-                        $respuesta = array('msg' => 'Producto existoso', 'icono' => 'success');
+                        $data2 = $this->model->registrarEntrada($fecha, $cantidad, $data);
+                        if ($data2 > 0) {
+                            $respuesta = array('msg' => 'Producto registrado', 'icono' => 'success');
+                        }
                     } else {
                         $respuesta = array('msg' => 'Error al registrar', 'icono' => 'error');
                     }
@@ -111,7 +122,7 @@ class Productos extends Controller
     {
         if (is_numeric($idProd)) {
             $data = $this->model->getProducto($idProd);
-            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);
         }
         die();
     }
