@@ -27,10 +27,6 @@ class Clientes extends Controller
         $this->views->getView('principal', "perfil", $data);
     }
 
-    public function listarClientes(){
-        
-    }
-
     //funcion para registar
     public function registroDirecto()
     {

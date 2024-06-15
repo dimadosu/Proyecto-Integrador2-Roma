@@ -57,7 +57,7 @@
                             Usuarios
                         </a>
                         <!--Clientes-->
-                        <a class="nav-link" href="<?php echo BASE_URL . 'clientes' ?>">
+                        <a class="nav-link" href="<?php echo BASE_URL . 'clientesM' ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Clientes
                         </a>
