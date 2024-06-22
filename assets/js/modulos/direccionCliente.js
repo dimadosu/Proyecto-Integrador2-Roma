@@ -1,12 +1,10 @@
-//const btnModificar = document.getElementById("btnModificar");
-
-const frmCuenta = document.querySelector("#frmCuenta");
+const frmDireccion = document.querySelector("#frmDireccion");
 
 document.addEventListener("DOMContentLoaded", function () {
-  frmCuenta.addEventListener("submit", function (e) {
+  frmDireccion.addEventListener("submit", function (e) {
     e.preventDefault();
     let data = new FormData(this);
-    const url = base_url + "clientes/actualizarDatosPersonales"; // url del controlador
+    const url = base_url + "clientes/actualizarDireccion"; // url del controlador
     const http = new XMLHttpRequest();
     http.open("POST", url, true);
     http.send(data); //enviamos la data del register
@@ -26,4 +24,3 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   });
 });
-

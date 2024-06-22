@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('UTC');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -137,12 +138,14 @@ class Clientes extends Controller
                 $correo = $_POST['correoLogin'];
                 $clave = $_POST['claveLogin'];
                 $verificar = $this->model->getVerificar($correo);
+                $verificarDireccion = $this->model->verificarDireccion($verificar['id']);
                 //verificamos que no se repita el mismo correo en el register 
                 if (!empty($verificar)) { //si existe algo, hacer lo siguiente....
                     if (password_verify($clave, $verificar['clave'])) {
                         $_SESSION['correoCliente'] = $verificar['correo_electronico'];
                         $_SESSION['nombreCliente'] = $verificar['nombres'] . ' ' . $verificar['apellido_paterno'] . ' ' . $verificar['apellido_materno'];
                         $_SESSION['idCliente'] = $verificar['id'];
+                        $_SESSION['direccion'] = $verificarDireccion;
                         $mensaje = array('msg' => 'ok', 'icono' => 'success');
                     } else {
                         $mensaje = array('msg' => 'Contraseña incorrecta', 'icono' => 'error');
@@ -172,7 +175,7 @@ class Clientes extends Controller
         $this->views->getView('principal', "cuenta", $data);
     }
 
-    public function actualizar()
+    public function actualizarDatosPersonales()
     {
         if (isset($_POST['nombre'])) {
             //recuperando data del post
@@ -183,9 +186,16 @@ class Clientes extends Controller
             $celular = $_POST['celular'];
             $correo = $_POST['correo'];
             $id = $_POST['id'];
-            if (empty($id)) {
-                $data = $this->model->modificar($nombre, $dni, $apePaterno,
-                $apeMaterno, $celular, $correo, $id);
+            if (!empty($id)) {
+                $data = $this->model->modificarDatosPersonales(
+                    $nombre,
+                    $dni,
+                    $apePaterno,
+                    $apeMaterno,
+                    $celular,
+                    $correo,
+                    $id
+                );
                 if ($data == 1) {
                     $respuesta = array('msg' => 'Datos Actualizados', 'icono' => 'success');
                 } else {
@@ -194,6 +204,85 @@ class Clientes extends Controller
             }
             echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
         }
+        die();
+    }
+
+    public function direccion()
+    {
+        $data['perfil'] = 'no'; //variable para no mostrar el carrito en el proceso de compra
+        $data['title'] = "Dirección de Envío";
+        $data['verificar'] = $this->model->getDireccionCliente($_SESSION['idCliente']);
+        $this->views->getView('principal', "direccion", $data);
+    }
+
+    public function actualizarDireccion()
+    {
+        if (isset($_POST['distrito']) && isset($_POST['calle']) && isset($_POST['referencia']) && isset($_POST['id'])) {
+            //recuperando data del post
+            $distrito = $_POST['distrito'];
+            $calle = $_POST['calle'];
+            $referencia = $_POST['referencia'];
+            $id = $_POST['id'];
+            if ($distrito != "" && $calle != "" && $referencia != "") {
+                if (!empty($id)) {
+                    $data = $this->model->modificarDireccion($distrito, $calle, $referencia, $id);
+                    if ($data == 1) {
+                        $respuesta = array('msg' => 'Direccion Actualizada', 'icono' => 'success');
+                    } else {
+                        $respuesta = array('msg' => 'Error al actualizar', 'icono' => 'error');
+                    }
+                }
+            }else{
+                $respuesta = array('msg' => 'Campos Vacios', 'icono' => 'error');
+            }
+        } else {
+            $respuesta = array('msg' => 'Error fatal', 'icono' => 'warning');
+        }
+        echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function password(){
+        $data['perfil'] = 'no'; //variable para no mostrar el carrito en el proceso de compra
+        $data['title'] = "Cambiar Contraseña";
+        $data['verificar'] = $this->model->getPassword($_SESSION['idCliente']);
+        $this->views->getView('principal', "clave", $data);
+    }
+
+    public function registrarPedidos()
+    {
+        $datos = file_get_contents('php://input');
+        $venta = json_decode($datos, true);
+        $productos = $venta['productos'];
+        if (is_array($venta)) {
+            $importe = $venta['totalEntrega'];
+            $total = $venta['totalNeto'];
+            $igv = 0.18;
+            $idPago = 1;
+            $idCliente = $_SESSION['idCliente'];
+            $fecha = date("Y-m-d H:i:s");
+
+            $data = $this->model->registrarPedido($fecha, $igv, $importe, $total, $idCliente, $idPago);
+
+            if ($data > 0) {
+                foreach ($productos as $producto) {
+                    $cantidad = $producto['cantidad'];
+                    $descripcion = $producto['nombre'];
+                    $importe = $producto['subTotal'];
+                    $precio = $producto['precio'];
+                    $id_producto = $producto['id'];
+                    $id_venta = $data;
+                    $this->model->registrarDetalleVenta($cantidad, $descripcion, $importe, $precio, $id_producto, $id_venta);
+                }
+                $mensaje = array('msg' => 'Pedido registrado', 'icono' => 'success');
+            } else {
+                $mensaje = array('msg' => 'Error al registrar el pedido', 'icono' => 'error');
+            }
+        } else {
+            $mensaje = array('msg' => 'Error fatal con los datos', 'icono' => 'error');
+        }
+
+        echo json_encode($mensaje);
         die();
     }
 }

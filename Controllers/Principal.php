@@ -3,7 +3,8 @@
 //clase controller que manda a mostrar las vistas 
 class Principal extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         session_start();
     }
@@ -40,7 +41,7 @@ class Principal extends Controller
     public function detail($id_producto)
     {
         $data['perfil'] = 'no';
-        $data['producto'] = $this ->model ->getProducto($id_producto); //recuperamos data de funcion
+        $data['producto'] = $this->model->getProducto($id_producto); //recuperamos data de funcion
         $data['title'] = $data['producto']['nombre_producto'];  //seleccinamos los datos
         $this->views->getView('principal', "detail", $data); //mandamos la vista y la data a monstrar
     }
@@ -52,13 +53,13 @@ class Principal extends Controller
         $id_categoria = 1;
         $page = 1;
         $array = explode(',', $datos);
-        if(isset($array[0])){
-            if(!empty($array[0])){
+        if (isset($array[0])) {
+            if (!empty($array[0])) {
                 $id_categoria = $array[0];
             }
         }
-        if(isset($array[1])){
-            if(!empty($array[1])){
+        if (isset($array[1])) {
+            if (!empty($array[1])) {
                 $page = $array[1];
             }
         }
@@ -71,7 +72,7 @@ class Principal extends Controller
         $total = $this->model->getTotalProductosCat($id_categoria);
         $data['total'] = ceil($total['total'] / $porPagina);
 
-        $data['productos'] = $this ->model ->getProductosCat($id_categoria ,$desde, $porPagina); //recuperamos data de funcion
+        $data['productos'] = $this->model->getProductosCat($id_categoria, $desde, $porPagina); //recuperamos data de funcion
         $data['title'] = 'Categorias';  //seleccinamos los datos
         $data['id_categoria'] = $id_categoria;
         $this->views->getView('principal', "categorias", $data); //mandamos la vista y la data a monstrar
@@ -95,7 +96,8 @@ class Principal extends Controller
     }
 
     //obtener productos a partir de la lista de deseo
-    public function listaDeseo(){
+    public function listaDeseo()
+    {
         $datos = file_get_contents('php://input');
         $json = json_decode($datos, true);
         $array = array();
@@ -116,36 +118,41 @@ class Principal extends Controller
     }
 
 
-    public function listaProductos(){
+    public function listaProductos()
+    {
         $datos = file_get_contents('php://input');
         $json = json_decode($datos, true);
-        $array['productos']= array();
+        $array['productos'] = array();
         $total = 0.00;
-
-        foreach ($json as $producto) {
-            # code...
-            $result = $this->model->getProducto($producto['idProducto']);
-            //print_r($producto);
-            $data['id'] =  $result['id'];
-            $data['nombre'] =  $result['nombre_producto'];
-            $data['precio'] =  $result['precio'];
-            $data['cantidad'] =  $producto['cantidad']; //recuperamos la cantidad del producto html, no bd
-            $subTotal = $result['precio'] * $producto['cantidad']; 
-            $data['imagen'] =  $result['imagen'];
-            $data['subTotal'] = number_format($subTotal, 2); 
-            array_push($array['productos'], $data);
-            $total = $total + $subTotal;
+        if (!empty($json)) {
+            foreach ($json as $producto) {
+                # code...
+                $result = $this->model->getProducto($producto['idProducto']);
+                //print_r($producto);
+                $data['id'] =  $result['id'];
+                $data['nombre'] =  $result['nombre_producto'];
+                $data['precio'] =  $result['precio'];
+                $data['cantidad'] =  $producto['cantidad']; //recuperamos la cantidad del producto html, no bd
+                $subTotal = $result['precio'] * $producto['cantidad'];
+                $data['imagen'] =  $result['imagen'];
+                $data['subTotal'] = number_format($subTotal, 2);
+                array_push($array['productos'], $data);
+                $total = $total + $subTotal;
+            }
         }
+
         $array['moneda'] = MONEDA;
         $array['total'] = number_format($total, 2);
+        $array['totalEntrega'] = $total;
+        $array['totalNeto'] = ($total + ($total * 0.18));
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
     }
 
-    public function busqueda($valor){
+    public function busqueda($valor)
+    {
         $data = $this->model->getBusqueda($valor);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die;
     }
-
 }

@@ -59,10 +59,60 @@ class ClientesModel extends Query
         return $this->select($consulta);
     }
 
-    public function modificar($nombre, $dni, $apePaterno, $apeMaterno, $celular, $correo, $id)
+    //fuction para obtener la direccion del cliente 
+    public function getDireccionCliente($id){
+        $consulta = "SELECT * FROM direcciones WHERE id_cliente = $id";
+        return $this ->select($consulta);
+    }
+
+    public function getPassword($id){
+        $consulta = "SELECT id, clave FROM clientes WHERE id='$id'";
+        return $this -> select($consulta);
+    }
+
+    public function verificarDireccion($idCliente)
     {
-        $consulta = "UPDATE clientes SET nombres=?, dni=?, apellido_paterno=?, apellido_materno=?, celular=?, correo=? WHERE id=?";
-        $array = array($nombre,$dni, $apePaterno, $apeMaterno, $celular, $correo, $id);
+        $consulta = "SELECT D.id, D.calle , D.distrito , D.referencia , D.id_cliente FROM clientes AS C 
+                        INNER JOIN direcciones AS D ON C.id = D.id_cliente AND C.id = '$idCliente'";
+        return $this->select($consulta);
+    }
+
+    public function modificarDatosPersonales($nombre, $dni, $apePaterno, $apeMaterno, $celular, $correo, $id)
+    {
+        $consulta = "UPDATE clientes SET nombres=?, dni=?, apellido_paterno=?, apellido_materno=?, numero_celular=?, correo_electronico=? WHERE id=?";
+        $array = array($nombre, $dni, $apePaterno, $apeMaterno, $celular, $correo, $id);
         return $this->save($consulta, $array);
+    }
+
+    public function modificarDireccion($distrito, $calle, $referencia, $id){
+        $consulta = "UPDATE direcciones SET calle=?, distrito=?, referencia=? WHERE id_cliente=?";
+        $array = array($calle, $distrito, $referencia, $id);
+        return $this->save($consulta, $array);
+    }
+
+    public function registrarPedido($fecha, $igv, $importe, $total, $id_cliente, $id_pago)
+    {
+        $consulta = "INSERT INTO ventas (fecha, igv, importe, total, id_cliente, id_pago) VALUES (?,?,?,?,?,?)";
+        $datos = array($fecha, $igv, $importe, $total, $id_cliente, $id_pago);
+        $data = $this->insertar($consulta, $datos);
+        if ($data > 0) {
+            $res = $data;
+        } else {
+            $res = 0;
+        }
+        return $res;
+    }
+
+    public function registrarDetalleVenta($cantidad, $descripcion, $importe, $precio, $id_producto, $id_venta)
+    {
+        $consulta = "INSERT INTO detalle_ventas (cantidad, descripcion, importe, precio, id_producto, id_venta) VALUES (?,?,?,?,?,?)";
+        $datos = array($cantidad, $descripcion, $importe, $precio, $id_producto, $id_venta);
+        $data = $this->insertar($consulta, $datos);
+        if ($data > 0) {
+            $res = $data;
+        } else {
+            $res = 0;
+        }
+        return $res;
     }
 }

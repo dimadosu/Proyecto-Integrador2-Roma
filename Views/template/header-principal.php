@@ -25,8 +25,8 @@
     <!--link para las ventanas modales-->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <!--LINK DE PAYPAL--->
-    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&currency=<?php echo MONEDA ?>&components=buttons&enable-funding=venmo" data-sdk-integration-source="developer-studio"></script>
+    <!--LINK DE PAYPAL
+    <script src="https://www.paypal.com/sdk/js?client-id=''&currency=USD"></script>-->
 
 </head>
 
@@ -117,8 +117,8 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes' ?>">Pago</a></li>
                                 <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/cuenta'?>">Datos Personales</a></li>
-                                <li><a class="dropdown-item" href="#">Dirección</a></li>
-                                <li><a class="dropdown-item" href="">Contraseña</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/direccion'?>">Dirección</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/password'?>">Contraseña</a></li>
                                 <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/salir' ?>">Cerrar Seción</a></li>
                             </ul>
                         </div>

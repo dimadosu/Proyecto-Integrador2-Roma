@@ -1,5 +1,6 @@
 const tableLista = document.querySelector("#tableListaProductos tbody"); //obtenemos el cuerpo de toda la tabla de la
 //lista de deseo
+const btnPCEntrega = document.getElementById("btnPCEntrega");
 
 document.addEventListener("DOMContentLoaded", function () {
   //alert("cargando script")
@@ -7,107 +8,86 @@ document.addEventListener("DOMContentLoaded", function () {
     getListaProductos();
   }
 
-  window.paypal
+  /*
+  paypal
     .Buttons({
-      style: {
-        shape: "rect",
-        layout: "vertical",
-        color: "gold",
-        label: "paypal",
-      },
-      async createOrder() {
-        try {
-          const response = await fetch("/api/orders", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            // use the "body" param to optionally pass additional order information
-            // like product ids and quantities
-            body: JSON.stringify({
-              cart: [
-                {
-                  id: "YOUR_PRODUCT_ID",
-                  quantity: "YOUR_PRODUCT_QUANTITY",
-                },
-              ],
-            }),
-          });
-
-          const orderData = await response.json();
-
-          if (orderData.id) {
+      // Call your server to set up the transaction
+      createOrder: function (data, actions) {
+        return fetch("/demo/checkout/api/paypal/order/create/", {
+          method: "post",
+        })
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (orderData) {
             return orderData.id;
-          }
-          const errorDetail = orderData?.details?.[0];
-          const errorMessage = errorDetail
-            ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-            : JSON.stringify(orderData);
-
-          throw new Error(errorMessage);
-        } catch (error) {
-          console.error(error);
-          // resultMessage(`Could not initiate PayPal Checkout...<br><br>${error}`);
-        }
-      },
-      async onApprove(data, actions) {
-        try {
-          const response = await fetch(`/api/orders/${data.orderID}/capture`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
           });
+      },
 
-          const orderData = await response.json();
-          // Three cases to handle:
-          //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-          //   (2) Other non-recoverable errors -> Show a failure message
-          //   (3) Successful transaction -> Show confirmation or thank you message
+      // Call your server to finalize the transaction
+      onApprove: function (data, actions) {
+        return fetch(
+          "/demo/checkout/api/paypal/order/" + data.orderID + "/capture/",
+          {
+            method: "post",
+          }
+        )
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (orderData) {
+            // Three cases to handle:
+            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+            //   (2) Other non-recoverable errors -> Show a failure message
+            //   (3) Successful transaction -> Show confirmation or thank you
 
-          const errorDetail = orderData?.details?.[0];
+            // This example reads a v2/checkout/orders capture response, propagated from the server
+            // You could use a different API or structure for your 'orderData'
+            var errorDetail =
+              Array.isArray(orderData.details) && orderData.details[0];
 
-          if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-            // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-            // recoverable state, per
-            // https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-            return actions.restart();
-          } else if (errorDetail) {
-            // (2) Other non-recoverable errors -> Show a failure message
-            throw new Error(
-              `${errorDetail.description} (${orderData.debug_id})`
-            );
-          } else if (!orderData.purchase_units) {
-            throw new Error(JSON.stringify(orderData));
-          } else {
-            // (3) Successful transaction -> Show confirmation or thank you message
-            // Or go to another URL:  actions.redirect('thank_you.html');
-            const transaction =
-              orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
-              orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
-            resultMessage(
-              `Transaction ${transaction.status}: ${transaction.id}<br>
-          <br>See console for all available details`
-            );
+            if (errorDetail && errorDetail.issue === "INSTRUMENT_DECLINED") {
+              return actions.restart(); // Recoverable state, per:
+              // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+            }
+
+            if (errorDetail) {
+              var msg = "Sorry, your transaction could not be processed.";
+              if (errorDetail.description)
+                msg += "\n\n" + errorDetail.description;
+              if (orderData.debug_id) msg += " (" + orderData.debug_id + ")";
+              return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+            }
+
+            // Successful capture! For demo purposes:
             console.log(
               "Capture result",
               orderData,
               JSON.stringify(orderData, null, 2)
             );
-          }
-        } catch (error) {
-          console.error(error);
-          resultMessage(
-            `Sorry, your transaction could not be processed...<br><br>${error}`
-          );
-        }
+            var transaction = orderData.purchase_units[0].payments.captures[0];
+            alert(
+              "Transaction " +
+                transaction.status +
+                ": " +
+                transaction.id +
+                "\n\nSee console for all available details"
+            );
+
+            // Replace the above to show a success message within this page, e.g.
+            // const element = document.getElementById('paypal-button-container');
+            // element.innerHTML = '';
+            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+          });
       },
     })
-    .render("#paypal-button-container");
+    .render("#paypal-button-container");*/
 });
 
 //verCarrito
 function getListaProductos() {
+  let html = "";
   const url = base_url + "principal/listaProductos"; // url del controlador
   const http = new XMLHttpRequest();
   http.open("POST", url, true);
@@ -117,30 +97,70 @@ function getListaProductos() {
       //validamos la respuesta
       const res = JSON.parse(this.responseText);
       //console.log(res);
-      let html = "";
       //res-> cotiene productos[array] y el total-> Controlador Principal
-      res.productos.forEach((producto) => {
-        html += `
-                  <tr>
-                      <td>
-                          <img src="${producto.imagen}" 
-                              alt="" class="img-thumbnail 
-                              rounded-circle" width="100"
-                          >
-                      </td>
-                      <td class="fw-bold">${producto.nombre}</td>
-                      <td class="text-center fw-bold">
-                        ${producto.precio}
-                      </td>
-                      <td class="text-center fw-bold">${producto.cantidad}</td>
-                      <td class="text-center fw-bold">${producto.subTotal}</td>
-                      
-                  </tr>
-                  `;
+      if (res.totalNeto > 0) {
+        res.productos.forEach((producto) => {
+          html += `
+                    <tr>
+                        <td>
+                            <img src="${producto.imagen}" 
+                                alt="" class="img-thumbnail 
+                                rounded-circle" width="100"
+                            >
+                        </td>
+                        <td class="fw-normal">${producto.nombre}</td>
+                        <td class="text-center fw-normal">
+                          ${producto.precio}
+                        </td>
+                        <td class="text-center fw-normal">${producto.cantidad}</td>
+                        <td class="text-center fw-normal">${producto.subTotal}</td>
+                        
+                    </tr>
+                    `;
+        });
+        tableLista.innerHTML = html;
+        document.querySelector("#subProducto").textContent =
+          "Sub Total = " + "S/ " + res.total;
+        document.querySelector('#txtIGV').textContent = "IGV: 18 %";
+        document.querySelector("#totalNeto").textContent =
+          "Total Neto = " + "S/ " + res.totalNeto;
+        localStorage.setItem("arrayPedidos", JSON.stringify(res));
+      }else{
+        tableLista.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center">Carrito Vacío</td>
+          </tr>
+        `
+      }
+      
+    }
+  };
+}
+
+function registrarPedido() {
+  const datos = JSON.parse(localStorage.getItem("arrayPedidos"));
+  const url = base_url + "clientes/registrarPedidos"; // url del controlador
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send(JSON.stringify(datos)); //iniciamos la body del request con la lista de deseo del localStrorage
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      //validamos la respuesta
+      //console.log(this.responseText);
+      const res = JSON.parse(this.responseText);
+      Swal.fire({
+        title: "Aviso",
+        text: res.msg,
+        icon: res.icono,
       });
-      tableLista.innerHTML = html;
-      document.querySelector("#totalProducto").textContent =
-        "Total a pagar = " + res.moneda + " " + res.total;
+      if (res.icono == "success") {
+        localStorage.removeItem("listaCarrito");
+        localStorage.removeItem("arrayPedidos");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+      }
     }
   };
 }
