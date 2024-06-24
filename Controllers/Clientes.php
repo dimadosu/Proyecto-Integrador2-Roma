@@ -146,7 +146,7 @@ class Clientes extends Controller
                         $_SESSION['nombreCliente'] = $verificar['nombres'] . ' ' . $verificar['apellido_paterno'] . ' ' . $verificar['apellido_materno'];
                         $_SESSION['idCliente'] = $verificar['id'];
                         $_SESSION['direccion'] = $verificarDireccion;
-                        $mensaje = array('msg' => 'ok', 'icono' => 'success');
+                        $mensaje = array('msg' => 'ok', 'icono' => 'success', 'idCliente' => $verificar['id']);
                     } else {
                         $mensaje = array('msg' => 'Contraseña incorrecta', 'icono' => 'error');
                     }
@@ -215,6 +215,32 @@ class Clientes extends Controller
         $this->views->getView('principal', "direccion", $data);
     }
 
+    public function agregarDireccion()
+    {
+        //validando envio del cliente al servidor 
+        if (isset($_POST['distrito']) && isset($_POST['calle']) && isset($_POST['referencia'])) {
+            $distrito = $_POST['distrito'];
+            $calle =  $_POST['calle'];
+            $referencia = $_POST['referencia'];
+            $idCliente = $_POST['id'];
+            //validando si existe dato 
+            if (empty($_POST['distrito']) || empty($_POST['calle']) || empty($_POST['referencia'])) {
+                $respuesta = array('msg' => 'Todos los campos son requeridos', 'icono' => 'warning');
+            } else {
+                $data = $this->model->registrarDireccion($distrito, $calle, $referencia, $idCliente);
+                if ($data > 0) {
+                    $respuesta = array('msg' => 'Direccion Registrada', 'icono' => 'success');
+                    $verificarDireccion = $this->model->verificarDireccion($_SESSION['idCliente']);
+                    $_SESSION['direccion'] = $verificarDireccion;
+                } else {
+                    $respuesta = array('msg' => 'Error al registrar', 'icono' => 'error');
+                }
+            }
+        }
+        echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     public function actualizarDireccion()
     {
         if (isset($_POST['distrito']) && isset($_POST['calle']) && isset($_POST['referencia']) && isset($_POST['id'])) {
@@ -232,7 +258,7 @@ class Clientes extends Controller
                         $respuesta = array('msg' => 'Error al actualizar', 'icono' => 'error');
                     }
                 }
-            }else{
+            } else {
                 $respuesta = array('msg' => 'Campos Vacios', 'icono' => 'error');
             }
         } else {
@@ -242,7 +268,8 @@ class Clientes extends Controller
         die();
     }
 
-    public function password(){
+    public function password()
+    {
         $data['perfil'] = 'no'; //variable para no mostrar el carrito en el proceso de compra
         $data['title'] = "Cambiar Contraseña";
         $data['verificar'] = $this->model->getPassword($_SESSION['idCliente']);
@@ -283,6 +310,29 @@ class Clientes extends Controller
         }
 
         echo json_encode($mensaje);
+        die();
+    }
+
+    //listar pedidos del cliente
+    public function listarVenta($id)
+    {
+        $data = $this->model->getVentaPorIdCliente($id);
+        for ($i = 0; $i < count($data); $i++) {
+            $data[$i]['accion'] = '<div class="text-center"> 
+                                        <button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>';
+        }
+        echo json_encode($data);
+        die();
+    }
+
+    //listar los detalles del pedido
+    public function verPedido($id)
+    {
+        $data = $this->model->verDetallePedido($id);
+        echo json_encode($data);
         die();
     }
 }

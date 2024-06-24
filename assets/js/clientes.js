@@ -2,10 +2,35 @@ const tableLista = document.querySelector("#tableListaProductos tbody"); //obten
 //lista de deseo
 const btnPCEntrega = document.getElementById("btnPCEntrega");
 
+const tblPendientes = document.querySelector("#tblPendientes");
+
+const modalPedido = new bootstrap.Modal(document.getElementById("modalPedido"));
+
 document.addEventListener("DOMContentLoaded", function () {
   //alert("cargando script")
+  let login = JSON.parse(localStorage.getItem("login"));
+  let idCliente = login.idCliente;
+  //console.log(idCliente);
   if (tableLista) {
     getListaProductos();
+
+    //cargando datos de tabla pendientes
+    $("#tblPendientes").DataTable({
+      ajax: {
+        url: base_url + "clientes/listarVenta/" + idCliente,
+        dataSrc: "",
+      },
+      columns: [
+        { data: "id" },
+        { data: "fecha" },
+        { data: "igv" },
+        { data: "importe" },
+        { data: "total" },
+        { data: "accion" },
+      ],
+      dom,
+      buttons,
+    });
   }
 
   /*
@@ -121,22 +146,22 @@ function getListaProductos() {
         tableLista.innerHTML = html;
         document.querySelector("#subProducto").textContent =
           "Sub Total = " + "S/ " + res.total;
-        document.querySelector('#txtIGV').textContent = "IGV: 18 %";
+        document.querySelector("#txtIGV").textContent = "IGV: 18 %";
         document.querySelector("#totalNeto").textContent =
           "Total Neto = " + "S/ " + res.totalNeto;
         localStorage.setItem("arrayPedidos", JSON.stringify(res));
-      }else{
+      } else {
         tableLista.innerHTML = `
           <tr>
             <td colspan="5" class="text-center">Carrito Vacío</td>
           </tr>
-        `
+        `;
       }
-      
     }
   };
 }
 
+//registra pedido a la bd
 function registrarPedido() {
   const datos = JSON.parse(localStorage.getItem("arrayPedidos"));
   const url = base_url + "clientes/registrarPedidos"; // url del controlador
@@ -161,6 +186,35 @@ function registrarPedido() {
         }, 2000);
       } else {
       }
+    }
+  };
+}
+
+//obtener el detalle de un venta
+function verPedido(idPedido) {
+  const url = base_url + "clientes/verPedido/" + idPedido;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 || this.readyState == 200) {
+      const res = JSON.parse(this.responseText);
+      let html = "";
+      //res-> cotiene la lista del pedido seleccionado
+      let contador = 0;
+      res.forEach((pedido) => {
+        html += `
+                <tr>
+                    <td class"text-center">${(contador = contador + 1)}</>
+                    <td class="fw-bold">${pedido.descripcion}</td>
+                    <td class="text-center fw-bold">${pedido.precio}</td>
+                    <td class="text-center fw-bold">${pedido.cantidad}</td>
+                    <td class="text-center fw-bold">${pedido.importe}</td>
+                </tr>
+                `;
+      });
+      document.querySelector("#tblDetallePedido tbody").innerHTML = html;
+      modalPedido.show();
     }
   };
 }

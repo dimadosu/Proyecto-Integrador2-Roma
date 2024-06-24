@@ -8,19 +8,19 @@
             <input type="hidden" value="<?php echo $data['verificar']['id_cliente'] ?>" id="id" name="id">
             <label for="distrito" class="col-sm-2 col-form-label">Distrito</label>
             <div class="col-sm-4">
-                <input id="distrito" name="distrito" type="text" class="form-control form-control-sm" value="<?php echo $data['verificar']['distrito'] ?>">
+                <input id="distrito" name="distrito" type="text" class="form-control form-control-sm" value="<?php echo ($data['verificar']) ? $data['verificar']['distrito'] : 'No tiene Dato' ?>">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="calle" class="col-sm-2 col-form-label">Calle</label>
             <div class="col-sm-4">
-                <input id="calle" name="calle" type="text" class="form-control form-control-sm" value="<?php echo $data['verificar']['calle'] ?>">
+                <input id="calle" name="calle" type="text" class="form-control form-control-sm" value="<?php echo ($data['verificar']) ? $data['verificar']['calle'] : 'No tiene Dato'?>">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="referencia" class="col-sm-2 col-form-label">Referencia</label>
             <div class="col-sm-4">
-                <input id="referencia" name="referencia" type="text" class="form-control form-control-sm" value="<?php echo $data['verificar']['referencia'] ?>">
+                <input id="referencia" name="referencia" type="text" class="form-control form-control-sm" value="<?php echo ($data['verificar']) ? $data['verificar']['referencia'] : 'No tiene Dato' ?>">
             </div>
         </div>
         <div class="mb-3 row">

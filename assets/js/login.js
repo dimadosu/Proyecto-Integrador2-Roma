@@ -5,6 +5,7 @@ const frmRegister = document.querySelector("#frmRegister");
 
 const registrarse = document.querySelector("#registrarse"); //boton de ir a registro
 const login = document.querySelector("#login"); //boton de logueo
+const cerrar = document.querySelector("#cerrar"); //boton de cerrar session;
 
 //para el registro
 const dniRegistro = document.querySelector("#dniRegistro");
@@ -112,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
             icon: res.icono,
           });
           if (res.icono == "success") {
+            localStorage.setItem('login', JSON.stringify(res));
             setTimeout(() => {
               window.location.reload();
             }, 2000);
@@ -135,6 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
   });
+
+  //elimiinarmos la session del usuario
+  if(cerrar){
+    cerrar.addEventListener("click", function(){
+      localStorage.removeItem('login');
+    })
+  }
+  
 
   /*modal que muestra el login y register 
   btnModalLogin.addEventListener('click', function(){

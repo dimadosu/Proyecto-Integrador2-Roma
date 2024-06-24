@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="<?php echo BASE_URL . 'assets/img/apple-icon.png'; ?>">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL . 'assets/img/favicon.ico'; ?>">
 
-    <link rel="stylesheet" href="<?php echo BASE_URL . 'assets/css/bootstrap.min.css'; ?>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo BASE_URL . 'assets/css/templatemo.css'; ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL . 'assets/css/custom.css'; ?>">
 
@@ -116,16 +116,20 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes' ?>">Pago</a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/cuenta'?>">Datos Personales</a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/direccion'?>">Dirección</a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL .'clientes/password'?>">Contraseña</a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/salir' ?>">Cerrar Seción</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/cuenta' ?>">Datos Personales</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/direccion' ?>">Dirección</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/password' ?>">Contraseña</a></li>
+                                <li>
+                                    <button id="cerrar" class="border-0" type="button">
+                                        <a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/salir' ?>">Cerrar Session</a>
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     <?php } else { ?>
                         <a class="nav-icon text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">
                             <i class="fas fa-fw fa-user text-dark mr-3"></i></a>
-                        <?php } ?>
+                    <?php } ?>
                 </div>
             </div>
 

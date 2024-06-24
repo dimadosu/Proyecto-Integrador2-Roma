@@ -115,4 +115,27 @@ class ClientesModel extends Query
         }
         return $res;
     }
+
+    public function getVentaPorIdCliente($id){
+        $consulta = "SELECT * FROM ventas WHERE id_cliente ='$id'";
+        return $this->selectAll($consulta);
+    }
+
+    public function verDetallePedido($idVenta){
+        $consulta = "SELECT * FROM detalle_ventas WHERE id_venta='$idVenta'";
+        return $this->selectAll($consulta);
+    }
+
+    //registrar direccion
+    public function registrarDireccion($distrito, $calle, $referencia, $idCliente){
+        $consulta = "INSERT INTO direcciones (calle, distrito, referencia, id_cliente) values (?,?,?,?)";
+        $datos = array($calle, $distrito, $referencia, $idCliente);
+        $data = $this->insertar($consulta, $datos);
+        if($data > 0){
+            $res = $data;
+        }else{
+            $res = 0;
+        }
+        return $res;
+    }
 }

@@ -144,7 +144,7 @@ class Principal extends Controller
         $array['moneda'] = MONEDA;
         $array['total'] = number_format($total, 2);
         $array['totalEntrega'] = $total;
-        $array['totalNeto'] = ($total + ($total * 0.18));
+        $array['totalNeto'] = number_format(($total + ($total * 0.18)), 2);
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
     }

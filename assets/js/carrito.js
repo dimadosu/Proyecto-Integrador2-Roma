@@ -176,7 +176,7 @@ function getListaCarrito() {
 }
 
 function btnEliminarCarrito() {
-  console.log(listaCarrito);
+  //console.log(listaCarrito);
   let listaEliminar = document.querySelectorAll(".btnDeleteCart"); //obtenemos todos los button con la clase
   //console.log(listaEliminar);
   for (let i = 0; i < listaEliminar.length; i++) {
