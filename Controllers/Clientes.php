@@ -268,6 +268,7 @@ class Clientes extends Controller
         die();
     }
 
+    //muestra la vista para cambiar la clave 
     public function password()
     {
         $data['perfil'] = 'no'; //variable para no mostrar el carrito en el proceso de compra

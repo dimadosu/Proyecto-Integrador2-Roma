@@ -2,9 +2,7 @@ const frmDireccion = document.querySelector("#frmDireccion"); //formulario para 
 
 const frmRegistroDireccion = document.querySelector("#frmRegistroDireccion"); //formulario para agregar la direccion
 
-const modalDireccion = new bootstrap.Modal(
-  document.getElementById("modalDireccion")
-);
+const modalDireccion = new bootstrap.Modal(document.getElementById("modalDireccion"));
 
 document.addEventListener("DOMContentLoaded", function () {
   if (frmDireccion) {
