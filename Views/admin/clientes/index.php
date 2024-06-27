@@ -13,7 +13,6 @@
                         <th>Dni</th>
                         <th>Correo</th>
                         <th>Celular</th>
-                        <th>Accion</th>
                     </tr>
                 </thead>
                 <tbody>

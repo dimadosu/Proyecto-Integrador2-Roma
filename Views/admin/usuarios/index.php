@@ -41,7 +41,7 @@
                     <div class="col-md-6">
                         <div class="form-group mb-2">
                             <label for="celular" class="fw-bold">Celular</label>
-                            <input id="celular" class="form-control" type="number" name="celular" min="0">
+                            <input id="celular" class="form-control" type="text" name="celular" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
                         </div>
                     </div>
                     <div class="col-md-6">

@@ -14,7 +14,7 @@
                     <input type="hidden" id="id" name="id">
                     <div class="form-group mb-2">
                         <label for="ruc" class="fw-bold">RUC</label>
-                        <input id="ruc" class="form-control" type="text" name="ruc">
+                        <input id="ruc" class="form-control" type="text" name="ruc" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
                     </div>
                     <div class="form-group mb-2">
                         <label for="nombre_comercial" class="fw-bold">Proveedor</label>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="numero_contacto" class="fw-bold">Número Contacto</label>
-                        <input id="numero_contacto" class="form-control" type="number" name="numero_contacto" min="0">
+                        <input id="numero_contacto" class="form-control" type="text" name="numero_contacto" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
                     </div>
                     <div class="form-group mb-2">
                         <label for="correo_contacto" class="fw-bold">Correo Contacto</label>

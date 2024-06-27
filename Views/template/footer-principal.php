@@ -76,7 +76,7 @@
                         <div class="row g-3 d-none" id="frmRegister">
                             <div class="form-group  col-md-6">
                                 <label for="dniRegistro" class="fw-bold">Dni</label>
-                                <input id="dniRegistro" class="form-control" type="text" name="dniRegistro" placeholder="Dni">
+                                <input id="dniRegistro" class="form-control" type="text" name="dniRegistro" placeholder="Dni" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="nombreRegistro" class="fw-bold">Nombres</label>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="celularRegistro" class="fw-bold">Celular</label>
-                                <input id="celularRegistro" class="form-control" type="text" name="correoRegistro" placeholder="Celular">
+                                <input id="celularRegistro" class="form-control" type="text" name="correoRegistro" placeholder="Celular" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="correoRegistro" class="fw-bold">Correo</label>

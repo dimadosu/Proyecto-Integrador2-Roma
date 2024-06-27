@@ -58,13 +58,13 @@
                         <div class="col-md-2">
                             <div class="form-group mb-2">
                                 <label for="precio" class="fw-bold">Precio</label>
-                                <input id="precio" class="form-control" type="text" name="precio" min="0">
+                                <input id="precio" class="form-control" type="text" name="precio" onKeypress="if (event.keyCode < 46 || event.keyCode > 57) event.returnValue = false;">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group mb-2">
                                 <label for="cantidad" class="fw-bold">Cantidad</label>
-                                <input id="cantidad" class="form-control" type="number" name="cantidad" min="0">
+                                <input id="cantidad" class="form-control" type="text" name="cantidad" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
                             </div>
                         </div>
                         <div class="col-md-3">
