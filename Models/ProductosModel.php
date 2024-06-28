@@ -74,10 +74,15 @@ class ProductosModel extends Query
 
     public function getEntradas(){
         $consulta = "SELECT  EP.id , P.nombre_producto, P.cantidad, EP.stock, EP.fecha FROM productos AS P 
-                    INNER JOIN entrada_productos AS EP ON P.id = EP.id_producto;";
+                    INNER JOIN entrada_productos AS EP ON P.id = EP.id_producto order by EP.id desc;";
         return $this->selectAll($consulta);
     }
 
+    public function getSalidas(){
+        $consulta = "SELECT SP.id, P.nombre_producto, SP.cantidad, SP.fecha from productos AS P 
+                    INNER JOIN salida_productos AS SP ON P.id = SP.id_producto ORDER BY SP.fecha DESC;";
+        return $this->selectAll($consulta);
+    }
     
     
 }

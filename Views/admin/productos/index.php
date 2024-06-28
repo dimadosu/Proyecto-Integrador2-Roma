@@ -118,12 +118,13 @@
         <?php include 'Views/admin/productos/entradas.php'?>
     </div>
     <div  class="tab-pane fade" id="salidas" role="tabpanel" aria-labelledby="profile-tab">
-            <p>estas en salidas</p>
+            <?php include 'Views/admin/productos/salidas.php'?>
     </div>
 </div>
 
 <?php include 'Views/admin/script.php' ?>
 <script src="<?php echo BASE_URL . 'assets/js/modulos/productos.js' ?>"></script>
+<script src="<?php echo BASE_URL . 'assets/js/modulos/salida.js'?>"></script>
 </body>
 
 </html>

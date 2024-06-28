@@ -30,14 +30,20 @@ class Productos extends Controller
             </div>';
         }
         echo json_encode($data); //retornamos data
-        die;
+        die();
     }
 
     public function listarEntradas()
     {
         $data = $this->model->getEntradas();
         echo json_encode($data); //retornamos data
-        die;
+        die();
+    }
+
+    public function listarSalidas(){
+        $data = $this->model->getSalidas();
+        echo json_encode($data);
+        die();
     }
 
     public function registrar()
@@ -55,7 +61,8 @@ class Productos extends Controller
             $id = $_POST['id'];
             $ruta = 'assets/img/productos/';
             $nombreImg = date('YmdHis');
-            $fecha = date('Y-m-d H:i:s');
+            date_default_timezone_set('America/Lima');
+            $fecha = date("Y-m-d H:i:s");
             if (
                 empty($_POST['nombre']) || empty($_POST['precio']) || empty($_POST['cantidad']) || empty($_POST['categoria']) ||
                 empty($_POST['marca']) || empty($_POST['medida']) || empty($_POST['idUser'])

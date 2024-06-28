@@ -181,7 +181,7 @@ function registrarPedido() {
       if (res.icono == "success") {
         localStorage.removeItem("listaCarrito");
         localStorage.removeItem("arrayPedidos");
-        setTimeout(() => {
+        setTimeout(() => { 
           window.location.reload();
         }, 2000);
       } else {

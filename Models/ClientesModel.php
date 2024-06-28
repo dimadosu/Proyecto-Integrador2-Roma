@@ -90,10 +90,10 @@ class ClientesModel extends Query
         return $this->save($consulta, $array);
     }
 
-    public function registrarPedido($fecha, $igv, $importe, $total, $id_cliente, $id_pago)
+    public function registrarPedido($fecha, $igv, $importe, $total, $id_cliente, $id_pago, $id_tipo_proceso)
     {
-        $consulta = "INSERT INTO ventas (fecha, igv, importe, total, id_cliente, id_pago) VALUES (?,?,?,?,?,?)";
-        $datos = array($fecha, $igv, $importe, $total, $id_cliente, $id_pago);
+        $consulta = "INSERT INTO ventas (fecha, igv, importe, total, id_cliente, id_pago, id_tipo_proceso) VALUES (?,?,?,?,?,?,?)";
+        $datos = array($fecha, $igv, $importe, $total, $id_cliente, $id_pago, $id_tipo_proceso);
         $data = $this->insertar($consulta, $datos);
         if ($data > 0) {
             $res = $data;

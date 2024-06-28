@@ -184,7 +184,7 @@
             </div>
             <form id="frmRegistroDireccion">
                 <div class="row modal-body">
-                    <input type="hidden" id="id" name="id" value="<?php echo $_SESSION['idCliente']?>">
+                    <input type="hidden" id="id" name="id" value="<?php echo $_SESSION['idCliente'] ?>">
                     <div class="col-md-6">
                         <div class="form-group mb-2 ">
                             <label for="distrito" class="fw-bold">Distrito</label>
@@ -232,7 +232,10 @@
 <?php include 'Views/template/footer-principal.php'; ?>
 <!-- End Footer-->
 
-
+<script src="https://checkout.culqi.com/js/v4"></script>
+<script>
+    Culqi.publicKey = 'Aquí inserta tu llave pública';
+</script>
 <script src="<?php echo BASE_URL . 'assets/DataTables/datatables.min.js' ?>"></script>
 <script src="<?php echo BASE_URL . 'assets/js/clientes.js' ?>"></script>
 <script src="<?php echo BASE_URL . 'assets/js/modulos/direccionCliente.js' ?>"></script>

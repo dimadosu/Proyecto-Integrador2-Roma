@@ -4,6 +4,7 @@ date_default_timezone_set('UTC');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use PSpell\Config;
 
 require 'vendor/autoload.php';
 
@@ -288,9 +289,9 @@ class Clientes extends Controller
             $igv = 0.18;
             $idPago = 1;
             $idCliente = $_SESSION['idCliente'];
+            date_default_timezone_set('America/Lima');
             $fecha = date("Y-m-d H:i:s");
-
-            $data = $this->model->registrarPedido($fecha, $igv, $importe, $total, $idCliente, $idPago);
+            $data = $this->model->registrarPedido($fecha, $igv, $importe, $total, $idCliente, $idPago,1);
 
             if ($data > 0) {
                 foreach ($productos as $producto) {
