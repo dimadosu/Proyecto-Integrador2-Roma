@@ -274,7 +274,7 @@ class Clientes extends Controller
     {
         $data['perfil'] = 'no'; //variable para no mostrar el carrito en el proceso de compra
         $data['title'] = "Cambiar Contraseña";
-        $data['verificar'] = $this->model->getPassword($_SESSION['idCliente']);
+        //$data['verificar'] = $this->model->getPassword($_SESSION['idCliente']);
         $this->views->getView('principal', "clave", $data);
     }
 
@@ -291,7 +291,7 @@ class Clientes extends Controller
             $idCliente = $_SESSION['idCliente'];
             date_default_timezone_set('America/Lima');
             $fecha = date("Y-m-d H:i:s");
-            $data = $this->model->registrarPedido($fecha, $igv, $importe, $total, $idCliente, $idPago,1);
+            $data = $this->model->registrarPedido($fecha, $igv, $importe, $total, $idCliente, $idPago, 1);
 
             if ($data > 0) {
                 foreach ($productos as $producto) {
@@ -336,5 +336,43 @@ class Clientes extends Controller
         $data = $this->model->verDetallePedido($id);
         echo json_encode($data);
         die();
+    }
+
+    public function cambiarClave()
+    {
+        if (isset($_POST['clave']) || isset($_POST['nuevaClave']) || isset($_POST['confirNuevaClave'])) {
+            if (empty($_POST['clave']) || empty($_POST['nuevaClave']) || empty($_POST['confirNuevaClave'])) {
+                $mensaje = array('msg' => 'Campos requeridos', 'icono' => 'warning');
+            } else {
+                $claveActual = $_POST['clave'];
+                $nuevaClave = $_POST['nuevaClave'];
+                $confirClave = $_POST['confirNuevaClave'];
+                //validar la clave ingresa con la clave de bd
+                $verificar = $this->model->getPassword($_SESSION['idCliente']);
+                if (!empty($verificar)) {
+                    if (password_verify($claveActual, $verificar['clave'])) {
+                        //verificar la pass nueva y la de confirmación
+                        if (strcmp($nuevaClave, $confirClave) === 0) {
+                            $hash = password_hash($confirClave, PASSWORD_DEFAULT);
+                            $data = $this->model->actualizarClave($hash, $_SESSION['idCliente']);
+                            if ($data == 1) {
+                                $mensaje = array('msg' => 'Clave Actualizada', 'icono' => 'success');
+                            } else {
+                                $mensaje = array('msg' => 'Error al actualizar', 'icono' => 'error');
+                            }
+                        } else {
+                            $mensaje = array('msg' => 'La contraseña nueva y de confirmación no coinciden', 'icono' => 'error');
+                        }
+                    } else {
+                        $mensaje = array('msg' => 'Contraseña incorrecta', 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'Error fatal', 'icono' => 'warning');
+                }
+            }
+
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
 }

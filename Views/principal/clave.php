@@ -4,7 +4,7 @@
     <!--info-->
     <form action="" id="frmClave">
         <div class="mb-3 row">
-            <input type="hidden" value="<?php echo $data['verificar']['id'] ?>" id="id" name="id">
+            <input type="hidden" value="" id="id" name="id">
             <label for="clave" class="col-sm-2 col-form-label">Contraseña Actual</label>
             <div class="col-sm-4">
                 <input id="clave" name="clave" type="password" class="form-control form-control-sm" value="">

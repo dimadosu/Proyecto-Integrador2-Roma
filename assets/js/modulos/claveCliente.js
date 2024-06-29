@@ -13,10 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
         //console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         if (res.icono == "success") {
-          window.location.reload();
+          setTimeout(() => { 
+            window.location.reload();
+          }, 2000);
         }
         alertas(res.msg, res.icono);
       }
     };
   });
 });
+
+function alertas(msg, icono) {
+  Swal.fire({
+    title: "Aviso",
+    text: msg,
+    icon: icono,
+  });
+}

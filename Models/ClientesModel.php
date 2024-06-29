@@ -138,4 +138,11 @@ class ClientesModel extends Query
         }
         return $res;
     }
+
+    //actualizar clave
+    public function actualizarClave($clave, $idCliente){
+        $consulta = "UPDATE clientes SET clave=? WHERE id=?";
+        $data = array($clave, $idCliente);
+        return $this->save($consulta,$data);
+    }
 }
