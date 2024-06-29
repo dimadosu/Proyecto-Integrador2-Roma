@@ -63,8 +63,86 @@ class Admin extends Controller
     }
 
     //ir a perfil
-    public function perfil(){
+    public function perfil()
+    {
         $data['title'] = 'Perfil';
-        $this->views->getView('admin/administracion',"perfil", $data);
+        $data['datos'] = $this->model->getDatos($_SESSION['idUser']);
+        $this->views->getView('admin/administracion', "perfil", $data);
+    }
+
+    //actualizar los datos personales 
+    public function actualizarDatosPersonales()
+    {
+        if (isset($_POST['id'])) {
+            //recuperando data del post
+            $nombre = $_POST['nombre'];
+            $apePaterno = $_POST['apellidoPaterno'];
+            $apeMaterno = $_POST['apellidoMaterno'];
+            $celular = $_POST['celular'];
+            $correo = $_POST['correo'];
+            $id = $_POST['id'];
+            if (!empty($id)) {
+                $data = $this->model->modificarDatosPersonales(
+                    $nombre,
+                    $apePaterno,
+                    $apeMaterno,
+                    $correo,
+                    $celular,
+                    $id
+                );
+                if ($data == 1) {
+                    $respuesta = array('msg' => 'Datos Actualizados', 'icono' => 'success');
+                } else {
+                    $respuesta = array('msg' => 'Error al actualizar', 'icono' => 'error');
+                }
+            }
+            echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    //ir a la pagina para actualizar la clave
+    public function clave()
+    {
+        $data['title'] = 'Configuracion-Clave';
+        $this->views->getView('admin/administracion', "clave", $data);
+    }
+
+    public function cambiarClave()
+    {
+        if (isset($_POST['clave']) || isset($_POST['nuevaClave']) || isset($_POST['confirNuevaClave'])) {
+            if (empty($_POST['clave']) || empty($_POST['nuevaClave']) || empty($_POST['confirNuevaClave'])) {
+                $mensaje = array('msg' => 'Campos requeridos', 'icono' => 'warning');
+            } else {
+                $claveActual = $_POST['clave'];
+                $nuevaClave = $_POST['nuevaClave'];
+                $confirClave = $_POST['confirNuevaClave'];
+                //validar la clave ingresa con la clave de bd
+                $verificar = $this->model->getPassword($_SESSION['idUser']);
+                if (!empty($verificar)) {
+                    if (password_verify($claveActual, $verificar['clave'])) {
+                        //verificar la pass nueva y la de confirmación
+                        if (strcmp($nuevaClave, $confirClave) === 0) {
+                            $hash = password_hash($confirClave, PASSWORD_DEFAULT);
+                            $data = $this->model->actualizarClave($hash, $_SESSION['idUser']);
+                            if ($data == 1) {
+                                $mensaje = array('msg' => 'Clave Actualizada', 'icono' => 'success');
+                            } else {
+                                $mensaje = array('msg' => 'Error al actualizar', 'icono' => 'error');
+                            }
+                        } else {
+                            $mensaje = array('msg' => 'La contraseña nueva y de confirmación no coinciden', 'icono' => 'error');
+                        }
+                    } else {
+                        $mensaje = array('msg' => 'Contraseña incorrecta', 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'Error fatal', 'icono' => 'warning');
+                }
+            }
+
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
 }
