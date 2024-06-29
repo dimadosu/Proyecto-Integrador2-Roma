@@ -22,11 +22,11 @@
                                     <div class="card-body">
                                         <form id="formulario" >
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="email" type="email" placeholder="Correo electronico" name="email" value="ccarya12@gmail.com"/>
+                                                <input class="form-control" id="email" type="email" placeholder="Correo electronico" name="email"/>
                                                 <label for="email">Correo electronico</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="clave" type="password" placeholder="Clave" name="clave" value="admin#12"/>
+                                                <input class="form-control" id="clave" type="password" placeholder="Clave" name="clave"/>
                                                 <label for="clave">Clave de acceso</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
