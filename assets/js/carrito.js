@@ -187,7 +187,7 @@ function btnEliminarCarrito() {
       eliminarListaCarrito(idProducto);
     });
   }
-  console.log(listaCarrito);
+  //console.log(listaCarrito);
 }
 
 function eliminarListaCarrito(idProducto) {

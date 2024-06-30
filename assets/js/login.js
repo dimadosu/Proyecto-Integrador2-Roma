@@ -25,7 +25,7 @@ const claveLogin = document.querySelector("#claveLogin");
 const modalLogin = new bootstrap.Modal(document.getElementById("modalLogin"));
 
 //const para la busqueda de producto
-const inputBusqueda = document.querySelector("#inputMobileSearch");
+const inputBusqueda = document.querySelector("#inputModalSearch");
 
 document.addEventListener("DOMContentLoaded", function () {
   btnRegister.addEventListener("click", function () {
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
             icon: res.icono,
           });
           if (res.icono == "success") {
-            localStorage.setItem('login', JSON.stringify(res));
+            localStorage.setItem("login", JSON.stringify(res));
             setTimeout(() => {
               window.location.reload();
             }, 2000);
@@ -123,28 +123,69 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  //busqieda del producto-FALTA COMPLETAR 
-  inputBusqueda.addEventListener("keyup", function (e) {
-    const url = base_url + "principal/busqueda/" + e.target.value; // mandamos a este controlador y metodo
-    const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.send();
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
-        //const res = JSON.parse(this.responseText);
-        
+  //busqieda del producto-FALTA COMPLETAR
+  inputBusqueda.addEventListener("keydown", function (e) {
+    if (e.keyCode === 13) {
+      let valor = inputBusqueda.value;
+      if (valor === "") {
+        return;
       }
-    };
+      const url = base_url + "principal/busqueda/" + valor; // mandamos a este controlador y metodo
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      let html;
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          //console.log(this.responseText);
+          const res = JSON.parse(this.responseText);
+          //console.log(res);
+          html = "";
+          res.forEach((producto) => {
+            html += ` <div class="col-12 col-md-3 mb-4">
+                    <div class="card h-100">
+                        <a href="${
+                          base_url + "principal/detail/" + producto.id
+                        }">
+                            <img src="${
+                              producto.imagen
+                            }" class="card-img-top" alt="${
+              producto.nombre_producto
+            }">
+                        </a>
+                        <div class="card-body">
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-muted fa fa-star"></i>
+                                    <i class="text-muted fa fa-star"></i>
+                                </li>
+                                <li class=" text-right text-dark">${
+                                  producto.precio
+                                }</li>
+                            </ul>
+                            <p class="h2 text-decoration-none text-dark">${
+                              producto.nombre_producto
+                            }</p>
+                        </div>
+                    </div>
+                </div>`;
+          });
+          document.querySelector("#resultadoBusquda").innerHTML = html;
+        }
+      };
+      html = '';
+    }
   });
 
   //elimiinarmos la session del usuario
-  if(cerrar){
-    cerrar.addEventListener("click", function(){
-      localStorage.removeItem('login');
-    })
+  if (cerrar) {
+    cerrar.addEventListener("click", function () {
+      localStorage.removeItem("login");
+    });
   }
-  
 
   /*modal que muestra el login y register 
   btnModalLogin.addEventListener('click', function(){

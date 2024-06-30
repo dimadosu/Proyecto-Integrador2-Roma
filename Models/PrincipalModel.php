@@ -52,7 +52,7 @@ class PrincipalModel extends Query
 
     //busqueda de productos 
     public function getBusqueda($valor){
-        $consulta = "SELECT * FROM productos WHERE nombre_producto LIKE '%".$valor."%'";
+        $consulta = "SELECT * FROM productos WHERE nombre_producto LIKE '%" . $valor . "%'";
         return $this->selectAll($consulta);
     }
 }
