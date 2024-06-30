@@ -238,7 +238,7 @@
 </script>
 <script src="<?php echo BASE_URL . 'assets/DataTables/datatables.min.js' ?>"></script>
 <script src="<?php echo BASE_URL . 'assets/js/clientes.js' ?>"></script>
-<script src="<?php echo BASE_URL . 'assets/js/modulos/direccionCliente.js' ?>"></script>
+<script src="<?php echo BASE_URL . 'assets/js/modulos/agregarDireccion.js' ?>"></script>
 <script src="<?php echo BASE_URL . 'assets/js/botonConfig.js' ?>"></script>
 <!-- End Script -->
 </body>
