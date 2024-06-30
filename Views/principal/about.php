@@ -10,6 +10,26 @@
                     Con una trayectoria sólida en el mercado, Distribuciones y Servicios Roma S.A.C. se ha destacado por su capacidad para adaptarse a las demandas cambiantes del sector y por su enfoque centrado en el cliente. Nuestro objetivo principal es ofrecer soluciones integrales que agreguen valor a nuestros clientes, manteniendo siempre los más altos estándares de calidad y confiabilidad.
                 </p>
             </div>
+            <div>
+            <script>
+                window.addEventListener('mouseover', initLandbot, { once: true });
+                window.addEventListener('touchstart', initLandbot, { once: true });
+                var myLandbot;
+                function initLandbot() {
+                    if (!myLandbot) {
+                        var s = document.createElement('script');s.type = 'text/javascript';s.async = true;
+                        s.addEventListener('load', function() {
+                        var myLandbot = new Landbot.Livechat({
+                            configUrl: 'https://storage.googleapis.com/landbot.site/v3/H-2530436-CNHXG47HRGK9ES5N/index.json',
+                        });
+                        });
+                        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
+                        var x = document.getElementsByTagName('script')[0];
+                        x.parentNode.insertBefore(s, x);
+                    }
+                }
+            </script>
+            </div>
             <div class="col-md-4">
                 <img src="<?php echo BASE_URL; ?>assets/img/about-hero.svg" alt="About Hero">
             </div>
