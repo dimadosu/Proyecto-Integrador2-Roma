@@ -28,6 +28,29 @@ class AdminModel extends Query
         return $this->select($consulta);
     }
 
+    //Devuelve la cantidad de productos segun el mes ingresado (mes por numero)
+    public function getCantidadVentasXMes($mes)
+    {
+        $consulta = "SELECT count(*) as cantidad FROM ventas WHERE MONTH(fecha) = $mes";
+        return $this->select($consulta);
+    }
+
+    public function getClientesTop()
+    {
+        $consulta = "SELECT u.id, u.nombres, u.apellido_paterno, u.apellido_materno, u.dni, v.cant_ventas FROM
+            ( 
+                SELECT id_cliente, COUNT(*) as cant_ventas FROM ventas GROUP BY id_cliente ORDER BY cant_ventas DESC
+            ) as v
+            JOIN clientes as u on v.id_cliente = u.id";
+        return $this->selectAll($consulta);
+    }
+
+    //Devuelve la cantidad de producto segun _____dia?_______
+    public function getCandidadVentasXDia($dia)
+    {
+
+    }
+    
     //obtener datos personales del usuario 
     public function getDatos($id)
     {
@@ -35,6 +58,7 @@ class AdminModel extends Query
                     from usuarios as u WHERE id = '$id'";
         return $this->select($consulta);
     }
+
 
     public function modificarDatosPersonales($nombre,$apePaterno,$apeMaterno,$correo,$celular,$id
     ) {

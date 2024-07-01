@@ -51,6 +51,14 @@ class Admin extends Controller
         $data['proceso'] = $this->model->getCantidadVentaPorTipo(2);
         $data['enviada'] = $this->model->getCantidadVentaPorTipo(3);
         $data['cantProd'] = $this->model->getCantidadProductos();
+
+        $data['mes'][0] = $this->model->getCantidadVentasXMes(1)['cantidad']; //Relacion 0posicion - 1mes Enero
+        $data['mes'][1] = $this->model->getCantidadVentasXMes(2)['cantidad'];
+        $data['mes'][2] = $this->model->getCantidadVentasXMes(3)['cantidad'];
+        $data['mes'][3] = $this->model->getCantidadVentasXMes(4)['cantidad'];
+        $data['mes'][4] = $this->model->getCantidadVentasXMes(5)['cantidad'];
+        $data['mes'][5] = $this->model->getCantidadVentasXMes(6)['cantidad'];
+        
         $this->views->getView('admin/administracion', "index", $data);
     }
 
@@ -144,5 +152,12 @@ class Admin extends Controller
             echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
             die();
         }
+    }
+
+    public function listarClientesTop()
+    {
+        $data = $this->model->getClientesTop();
+        echo json_encode($data);
+        die;
     }
 }
